@@ -1,0 +1,9 @@
+db connection
+
+Server host : legfree.cojazfulukyo.us-east-1.rds.amazonaws.com
+
+port : 3306
+
+user name : admin
+
+pw : legfreeadmin
