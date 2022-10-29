@@ -6,7 +6,7 @@
 <!--查找用户信息-->
     <select id="selectUser" resultType="com.glasgow.tapp.pojo.User">
         select user_id,user_name,level,created_time,update_time
-        from user
+        from USER_INFO
         <where>
             <if test="searchValue!='' and searchValue!=null">
                 user_id like '{searchValue}%' or user_name like '%{searchValue}%'
@@ -24,7 +24,7 @@
 
 <!--查找用户返回数量-->
     <select id="searchUserReturnNum" resultType="Integer">
-        select count(*) from user
+        select count(*) from USER_INFO
         <where>
             <if test="searchValue!='' and searchValue!=null">
                 user_id like '{searchValue}%' or user_name like '%{searchValue}%'
@@ -39,22 +39,22 @@
     </select>
 <!--按照用户id查找-->
     <select id="selectUserById">
-        select * from user
+        select * from USER_INFO
         where user_id=${userId}
     </select>
 <!--根据用户名或ID查找用户(用于登录功能)-->
     <select id="selectUserByAccount" resultType="com.glasgow.tapp.pojo.User">
-        select * from user
+        select * from USER_INFO
         where user_id=#{account} or user_name=#{account}
     </select>
 <!--通过用户名密码查找用户(用于登录功能)-->
     <select id="selectUserByAccountPassword" resultType="com.glasgow.tapp.pojo.User">
-        select * from user
+        select * from USER_INFO
         where (user_id=#{account} or user_name=#{account})and password=#{password}
     </select>
 <!--新增用户-->
     <insert id="insertUser" parameterType="com.glasgow.tapp.pojo.User" useGeneratedKeys="true" keyProperty="userId">
-        insert into user
+        insert into USER_INFO
         (user_name,password,salt,level,created_time,update_time)
         values
         (#{userName},#{password},#{salt},5,now(),now())
@@ -72,7 +72,7 @@
     </update>
 <!--删除用户-->
     <delete id="deleteUser">
-        delete from user
+        delete from USER_INFO
         <where>
             user_id in
             <if test="userIds!=null and userIds.length>0">
@@ -85,20 +85,20 @@
 
 
     <select id="getUserMoneyByUserName" resultType="int">
-        select money from user
+        select money from USER_INFO
         where  user_name=#{userName}
     </select>
 
 
     <update id="updateUserMoneyByUserId">
-        update user
+        update USER_INFO
         set money=#{money}
         where user_id = #{userId}
     </update>
 
 
     <select id="getUserMoneyByUserId" resultType="int">
-        select money from user
+        select money from USER_INFO
         where  user_id=#{userId}
     </select>
 
