@@ -79,7 +79,9 @@ public class LoginController extends SuperController {
             session.setAttribute("sessionUser", userService.getUserByAccout(userAccount));
             session.removeAttribute("sessionSecurityCode");
             state = 1;
-            message = "登陆成功";
+            message = userService.getUserByAccout(userAccount).getLevel().toString();
+            System.out.println(state);
+            System.out.println(message);
         } catch (UnknownAccountException exception) {
             System.out.println("用户不存在！");
             message = "用户不存在！";
@@ -87,10 +89,7 @@ public class LoginController extends SuperController {
             System.out.println("密码错误！");
             message = "密码错误！";
         }
-        if(message.equals("登录成功")){
-            User user = userService.getUserByAccout(userAccount);
-            message = user.getLevel().toString();
-        }
+
         return new ResponseModel(state, message);
     }
 
