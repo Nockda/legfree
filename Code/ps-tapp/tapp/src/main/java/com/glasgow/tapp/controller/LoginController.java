@@ -44,7 +44,7 @@ public class LoginController extends SuperController {
     public ModelAndView toLogin(HttpServletResponse response) throws IOException {
         User user=getCurrentUser();
 //        if(user==null){
-            return new ModelAndView("/user/login");
+            return new ModelAndView("/WebContent/login");
 //        }else {
 //        response.sendRedirect("index");
 //        return new ModelAndView("index");
