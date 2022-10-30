@@ -44,7 +44,7 @@ public class LoginController extends SuperController {
     public ModelAndView toLogin(HttpServletResponse response) throws IOException {
         User user=getCurrentUser();
 //        if(user==null){
-            return new ModelAndView("/user/login");
+            return new ModelAndView("/WebContent/login");
 //        }else {
 //        response.sendRedirect("index");
 //        return new ModelAndView("index");
@@ -86,6 +86,10 @@ public class LoginController extends SuperController {
         } catch (IncorrectCredentialsException exception) {
             System.out.println("密码错误！");
             message = "密码错误！";
+        }
+        if(message.equals("登录成功")){
+            User user = userService.getUserByAccout(userAccount);
+            message = user.getLevel().toString();
         }
         return new ResponseModel(state, message);
     }
