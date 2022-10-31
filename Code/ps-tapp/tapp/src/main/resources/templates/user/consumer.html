@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Consumer Page</title>
+	<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../demo.css">
+	<script type="text/javascript" src="../../jquery.min.js"></script>
+	<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+</head>
+<body>
+	<h2>Let's be leg free!</h2>
+	<div style="margin:20px 0;"></div>
+	<table class="easyui-datagrid" title="Choose a vehicle"
+			data-options="rownumbers:true,singleSelect:true,url:'vehicle/getVehicleInfo',method:'get',toolbar:toolbar">
+		<thead>
+			<tr>
+				<th data-options="field:'vehicle_id',width:100">Vehicle No</th>
+				<th data-options="field:'vehicle_name',width:100">Vehicle Name</th>
+				<th data-options="field:'vehicle_location',width:80,align:'right'">Location</th>
+				<th data-options= field:'vehicle_free',width:80,align:'right'">Fee Per Hour</th>
+				<th data-options="field:'vehicle_durable',width:240">Durablity</th>
+				<th data-options="field:'vehicle_battery',width:240">Battery</th>
+				<th data-options="field:'vehicle_state',width:240">Status</th>
+			</tr>
+		</thead>
+	</table>
+	<script type="text/javascript">
+
+		var toolbar = [{
+			text:'Rent',
+			iconCls:'icon-add',
+			handler:function(){
+				var row = $('#dg').datagrid('getSelected');
+				url = "renting.html?user_id="+row.user_id+"&vehicle_no="+row.vehicle_no+"&vehicle_free="+row.vehicle_free+"&vehicle_loaction="+vehicle_location;
+				window.location.href = url;
+				}
+		},{
+			text:'Report',
+			iconCls:'icon-cut',
+			handler:function(){
+				var row = $('#dg').datagrid('getSelected');
+				url = "reporting.html?user_id="+row.user_id+"&vehicle_no="+row.vehicle_no;
+			}
+		},'-',{
+			text:'Renting History',
+			iconCls:'icon-save',
+			handler:function(){
+				url = "renting_history.html?user_id="+user_id;
+				window.location.href = url;
+			}
+		}];
+	</script>
+</body>
+</html>
