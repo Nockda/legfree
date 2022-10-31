@@ -51,6 +51,18 @@ public class LoginController extends SuperController {
 //        }
     }
 
+
+    @RequestMapping("/toVehicle")
+    public ModelAndView vehicle_info(HttpServletResponse response) throws IOException {
+        User user=getCurrentUser();
+//        if(user==null){
+        return new ModelAndView("/user/consumer");
+//        }else {
+//        response.sendRedirect("index");
+//        return new ModelAndView("index");
+//        }
+    }
+
     /**
      * 登录方法
      *
