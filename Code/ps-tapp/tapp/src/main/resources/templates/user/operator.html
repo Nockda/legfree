@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Operator Page</title>
+	<link rel="stylesheet" type="text/css" href="/js/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/js/themes/icon.css">
+	<!--	<link rel="stylesheet" type="text/css" href="../../static/js/demo.css">-->
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/js/axios.js"></script>
+</head>
+<body>
+	<h2>We are LEGFREE!</h2>
+	<div style="margin:20px 0;"></div>
+	<table class="easyui-datagrid" title="Vehicle List" style="width:700px;height:250px"
+			data-options="rownumbers:true,singleSelect:true,url:'vehicle/getVehicleInfo',method:'get',toolbar:toolbar">
+		<thead>
+			<tr>
+				<th data-options="field:'serno',width:100">Report No</th>
+				<th data-options="field:'consumer_id',width:80">Consumer</th>
+				<th data-options="field:'problem',width:80,align:'right'">Problem</th>
+				<th data-options="field:'issued_time',width:80,align:'right'">Issued Time</th>
+				<th data-options="field:'tackled_sts',width:240">Tackled Status</th>
+				<th data-options="field:'tackled_time',width:240">Tackled Time</th>
+				<th data-options="field:'operator_id',width:240">Operator</th>
+				<th data-options="field:'vehicle_no',width:240">Vehicle No</th>
+			</tr>
+		</thead>
+	</table>
+	<script type="text/javascript">
+		var toolbar = [{
+			text:'Charge',
+			iconCls:'icon-add',
+			handler:function(){alert('rent')}
+		},{
+			text:'Repair',
+			iconCls:'icon-cut',
+			handler:function(){alert('report')}
+		},'-',{
+			text:'Move',
+			iconCls:'icon-save',
+			handler:function(){alert('history')}
+		}];
+	</script>
+</body>
+</html>
