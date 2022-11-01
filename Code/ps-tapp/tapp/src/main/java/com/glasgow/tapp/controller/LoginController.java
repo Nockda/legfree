@@ -63,6 +63,28 @@ public class LoginController extends SuperController {
 //        }
     }
 
+
+    @RequestMapping("/toLocationVehicle")
+    public ModelAndView vehicle_location_info(HttpServletResponse response) throws IOException {
+        User user = getCurrentUser();
+//        if (user!=null){
+        return new ModelAndView("/test/location");
+//        }else {
+//            return new ModelAndView("/user/login");
+//        }
+    }
+
+    @RequestMapping("/toLocationInfoVehicle/{location}")
+    public ModelAndView vehicle_location_info_location(@PathVariable String location,HttpServletRequest request) {
+        User user = getCurrentUser();
+//        if (user!=null){
+        request.setAttribute("locationInfo",location);
+        return new ModelAndView("/test/locationInfo");
+//        }else {
+//            return new ModelAndView("/user/login");
+//        }
+    }
+
     /**
      * 登录方法
      *

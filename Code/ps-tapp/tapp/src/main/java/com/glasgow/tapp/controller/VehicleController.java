@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Hongbin BAO
@@ -21,7 +22,7 @@ import java.util.List;
 @ResponseBody
 @RestController
 @Slf4j
-public class VehicleController {
+public class VehicleController extends SuperController{
 
 
 
@@ -34,15 +35,15 @@ public class VehicleController {
      */
     @RequestMapping(value = "vehicle/getVehicleInfo",method = RequestMethod.GET)
     public List<Vehicle> getVehicleInfo(){
-       return vehicleService.getVehicleInfo();
+        return vehicleService.getVehicleInfo();
     }
 
     /**
      * 查询当前地区可用车辆
      */
     @RequestMapping(value = "vehicle/getVehicleInfoByLocation",method = RequestMethod.POST)
-    public List<Vehicle> getVehicleInfoByLocation(@RequestParam(value = "location", required = true)  String location){
-        return vehicleService.getVehicleInfoByLocation(location);
+    public List<Vehicle> getVehicleInfoByLocation(@RequestBody Map<String,String> param){
+        return vehicleService.getVehicleInfoByLocation(param.get("location"));
     }
 
 

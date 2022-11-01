@@ -19,7 +19,7 @@ import java.util.List;
 @ResponseBody
 @RestController
 @Slf4j
-public class OrderController {
+public class OrderController extends SuperController{
     @Autowired
     private VehicleService vehicleService;
     @Autowired
@@ -29,8 +29,8 @@ public class OrderController {
      * 查询订单
      */
     @RequestMapping(value = "order/getOrderInfoByUserId",method = RequestMethod.POST)
-    public List<Order> getUserMoneyByUserName(@RequestParam(value = "userId", required = true)  String userId){
-        return orderService.getOrderInfoByUserId(userId);
+    public List<Order> getUserMoneyByUserName(){
+        return orderService.getOrderInfoByUserId(String.valueOf(getCurrentUser().getUserId()));
     }
 
 

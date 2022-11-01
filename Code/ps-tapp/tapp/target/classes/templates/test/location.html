@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        G28QQ
+        <input id="locationInfo">
+        <button id="ok" onclick="jump()">ok</button>
+    </div>
+</body>
+<script>
+    function jump(){
+        window.location.href="/toLocationInfoVehicle/"+document.getElementById("locationInfo").value;
+    }
+</script>
+</html>
