@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/legfree.iml" filepath="$PROJECT_DIR$/.idea/legfree.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Code/ps-tapp/tapp/tapp.iml" filepath="$PROJECT_DIR$/Code/ps-tapp/tapp/tapp.iml" />
+    </modules>
+  </component>
+</project>
