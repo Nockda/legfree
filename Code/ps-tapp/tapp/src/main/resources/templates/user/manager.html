@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Manager Page</title>
+	<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../demo.css">
+	<script type="text/javascript" src="../../jquery.min.js"></script>
+	<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+</head>
+<body>
+	<h2>LEGFREE is everything</h2>
+	<div style="margin:20px 0;"></div>
+	<table class="easyui-datagrid" title="Data of Operating" style="width:700px;height:250px"
+			data-options="rownumbers:true,singleSelect:true,url:'datagrid_data1.json',method:'get',toolbar:toolbar">
+		<thead>
+			<tr>
+				<th data-options="field:'serno',width:100">Renting No</th>
+				<th data-options="field:'user_id',width:80">User Id</th>
+				<th data-options="field:'fees',width:80,align:'right'">Fees</th>
+				<th data-options="field:'renting_time',width:80,align:'right'">Renting Time</th>
+				<th data-options="field:'returning_time',width:240">Returning Time</th>
+				<th data-options="field:'rent_location',width:240">Renting Location</th>
+				<th data-options="field:'return_location',width:240">Returning Location</th>
+			</tr>
+		</thead>
+	</table>
+	<table class="easyui-datagrid" title="Data of Renting" style="width:700px;height:250px"
+			data-options="rownumbers:true,singleSelect:true,url:'datagrid_data1.json',method:'get',toolbar:toolbar">
+		<thead>
+			<tr>
+				<th data-options="field:'serno',width:100">Report No</th>
+				<th data-options="field:'consumer_id',width:80">Consumer</th>
+				<th data-options="field:'problem',width:80,align:'right'">Problem</th>
+				<th data-options="field:'issued_time',width:80,align:'right'">Issued Time</th>
+				<th data-options="field:'tackled_sts',width:240">Tackled Status</th>
+				<th data-options="field:'tackled_time',width:240">Tackled Time</th>
+				<th data-options="field:'operator_id',width:240">Operator</th>
+				<th data-options="field:'vehicle_no',width:240">Vehicle No</th>
+			</tr>
+		</thead>
+	</table>
+	
+<!-- 	<script type="text/javascript">
+		var toolbar = [{
+			text:'Rent',
+			iconCls:'icon-add',
+			handler:function(){alert('rent')}
+		},{
+			text:'Report',
+			iconCls:'icon-cut',
+			handler:function(){alert('report')}
+		},'-',{
+			text:'History',
+			iconCls:'icon-save',
+			handler:function(){alert('history')}
+		}];
+	</script> -->
+</body>
+</html>
