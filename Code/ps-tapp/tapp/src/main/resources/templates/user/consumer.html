@@ -12,18 +12,18 @@
 <body>
 	<h2>Let's be leg free!</h2>
 	<div style="margin:20px 0;"></div>
-	<table class="easyui-datagrid" title="Choose a vehicle"
-			data-options="rownumbers:true,singleSelect:true,url:'vehicle/getVehicleInfo',method:'get',toolbar:toolbar">
+	<table class="easyui-datagrid" title="Vehicle List" style="width:700px;height:250px"
+		   data-options="rownumbers:true,singleSelect:true,url:'vehicle/getVehicleInfo',method:'get',toolbar:toolbar">
 		<thead>
-			<tr>
-				<th data-options="field:'vehicle_id',width:100">Vehicle No</th>
-				<th data-options="field:'vehicle_name',width:100">Vehicle Name</th>
-				<th data-options="field:'vehicle_location',width:80,align:'right'">Location</th>
-				<th data-options= field:'vehicle_free',width:80,align:'right'">Fee Per Hour</th>
-				<th data-options="field:'vehicle_durable',width:240">Durablity</th>
-				<th data-options="field:'vehicle_battery',width:240">Battery</th>
-				<th data-options="field:'vehicle_state',width:240">Status</th>
-			</tr>
+		<tr>
+			<th data-options="field:'vehicleId',width:100">Vehicle No</th>
+			<th data-options="field:'vehicleName',width:80">Vehicle Name</th>
+			<th data-options="field:'vehicleLocation',width:80,align:'right'">Location</th>
+			<th data-options="field:'vehicleFree',width:80,align:'right'">Fee Per Hour</th>
+			<th data-options="field:'vehicleDurable',width:240">Durablity</th>
+			<th data-options="field:'vehicleBattery',width:240">Battery</th>
+			<th data-options="field:'vehicleState',width:240">Status</th>
+		</tr>
 		</thead>
 	</table>
 	<script type="text/javascript">
