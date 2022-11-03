@@ -48,10 +48,11 @@ public class VehicleService {
         return vehicleList;
     }
 
-    public String setVehicleStateById(String id,String userId,int time) {
+    public String setVehicleStateById(String id,String userId,int time,String location) {
 
         vehicleDao.setVehicleStateById(id);
 
+        vehicleDao.setVehicleLocationById(location,id);
 
         String orderId = "";
         Random random = new Random();
@@ -83,6 +84,21 @@ public class VehicleService {
     public String updateVehicleInfoById(String vehicleId, int vehicleDurable, int vehicleBattery) {
 
         vehicleDao.updateVehicleInfoById(vehicleId,  vehicleDurable, vehicleBattery);
+
+        return "success";
+    }
+
+    public String updateVehicleDurableById(String vehicleId) {
+
+
+        vehicleDao.updateVehicleDurableById(vehicleId);
+        return "success";
+    }
+
+    public String updateVehicleBatteryById(String vehicleId) {
+
+
+        vehicleDao.updateVehicleBatteryById(vehicleId);
 
         return "success";
     }

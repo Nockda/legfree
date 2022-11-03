@@ -7,8 +7,7 @@ import com.glasgow.tapp.pojo.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Hongbin BAO
@@ -26,4 +25,24 @@ public class ErrorInfoService {
         return errorInfoList;
     }
 
+    public String insertErrorInfo(String vehicleId,String message,String userId) {
+
+        String errorId = "";
+        Random random = new Random();
+        for (int i = 0; i < 10; i++) {
+            errorId += String.valueOf(random.nextInt(10));
+        }
+
+
+        Map errorInfoMap = new HashMap();
+        errorInfoMap.put("errorId",errorId);
+        errorInfoMap.put("vehicleId",vehicleId);
+        errorInfoMap.put("userId",userId);
+        errorInfoMap.put("message",message);
+
+        errorInfoDao.insertErrorInfo(errorInfoMap);
+
+
+        return "success";
+    }
 }

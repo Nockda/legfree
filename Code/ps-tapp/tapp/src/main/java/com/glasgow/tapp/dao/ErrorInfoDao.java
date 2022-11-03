@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Hongbin BAO
@@ -16,4 +17,7 @@ import java.util.List;
 public interface ErrorInfoDao {
 
     List<ErrorInfo> getErrorInfo();
+
+
+    int insertErrorInfo(Map map);
 }

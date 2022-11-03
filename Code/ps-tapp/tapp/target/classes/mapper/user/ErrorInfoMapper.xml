@@ -9,4 +9,13 @@
 
 
 
+    <insert id="insertErrorInfo">
+        insert into error_message_info(
+            error_id,
+            user_id,
+            vehicle_id,
+            message)
+        values (#{errorId},#{userId},#{vehicleId},#{message})
+    </insert>
+
 </mapper>

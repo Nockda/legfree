@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Hongbin BAO
@@ -28,7 +29,7 @@ public class OrderController extends SuperController{
     /**
      * 查询订单
      */
-    @RequestMapping(value = "order/getOrderInfoByUserId",method = RequestMethod.POST)
+    @RequestMapping(value = "order/getOrderInfoByUserId",method = RequestMethod.GET)
     public List<Order> getUserMoneyByUserName(){
         return orderService.getOrderInfoByUserId(String.valueOf(getCurrentUser().getUserId()));
     }
@@ -38,7 +39,7 @@ public class OrderController extends SuperController{
      * 更改订单状态
      */
     @RequestMapping(value = "order/updateOrderStateByOrderId",method = RequestMethod.POST)
-    public Order updateOrderStateByOrderId(@RequestParam(value = "orderId", required = true)  String orderId){
-        return orderService.updateOrderStateByOrderId(orderId);
+    public Order updateOrderStateByOrderId(@RequestBody Map<String,String> param){
+        return orderService.updateOrderStateByOrderId(param.get("orderId"));
     }
 }

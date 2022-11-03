@@ -81,9 +81,11 @@ public class UserServiceImpl implements UserService {
      * @param userName
      * @return
      */
-    public int getUserMoneyByUserName(String userName ){
+    public Map getUserMoneyByUserName(String userName ){
         int money;
         money = userDao.getUserMoneyByUserName(userName);
-        return money;
+        Map<String,String> moneyMap = new HashMap<>();
+        moneyMap.put("money",String.valueOf(money));
+        return moneyMap;
     }
 }

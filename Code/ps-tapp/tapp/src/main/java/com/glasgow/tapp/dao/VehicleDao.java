@@ -42,4 +42,12 @@ public interface VehicleDao {
     int updateVehicleInfoById(String vehicleId, int vehicleDurable, int vehicleBattery);
 
     Vehicle getVehicleInfoById(String vehicleId);
+
+    void setVehicleLocationById(String location , String vehicleId);
+
+
+    int updateVehicleDurableById(String vehicleId);
+
+
+    int updateVehicleBatteryById(String vehicleId);
 }

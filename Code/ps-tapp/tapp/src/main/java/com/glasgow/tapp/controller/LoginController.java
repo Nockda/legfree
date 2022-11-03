@@ -42,9 +42,9 @@ public class LoginController extends SuperController {
      */
     @RequestMapping("/toLogin")
     public ModelAndView toLogin(HttpServletResponse response) throws IOException {
-        User user=getCurrentUser();
+        User user = getCurrentUser();
 //        if(user==null){
-            return new ModelAndView("/user/login");
+        return new ModelAndView("/user/login");
 //        }else {
 //        response.sendRedirect("index");
 //        return new ModelAndView("index");
@@ -146,4 +146,55 @@ public class LoginController extends SuperController {
     }
 
 
+    /*
+     跳转界面
+     */
+
+    @RequestMapping("/toUserLogin")
+    public ModelAndView toUserLogin (HttpServletResponse response) throws IOException {
+        User user=getCurrentUser();
+//        if(user==null){
+        return new ModelAndView("/test/login");
+//        }else {
+//        response.sendRedirect("index");
+//        return new ModelAndView("index");
+//        }
+    }
+
+
+
+    @RequestMapping("/toVehicleInfo")
+    public ModelAndView vehicleInfo(HttpServletResponse response) throws IOException {
+        User user=getCurrentUser();
+//        if(user==null){
+        return new ModelAndView("/test/vehicle");
+//        }else {
+//        response.sendRedirect("index");
+//        return new ModelAndView("index");
+//        }
+    }
+
+
+    @RequestMapping("/orderInfo")
+    public ModelAndView setVehicleInfo(HttpServletResponse response) throws IOException {
+        User user=getCurrentUser();
+//        if(user==null){
+        return new ModelAndView("/test/order");
+//        }else {
+//        response.sendRedirect("index");
+//        return new ModelAndView("index");
+//        }
+    }
+
+
+    @RequestMapping("/operator")
+    public ModelAndView operatorInfo(HttpServletResponse response) throws IOException {
+        User user=getCurrentUser();
+//        if(user==null){
+        return new ModelAndView("/test/operator");
+//        }else {
+//        response.sendRedirect("index");
+//        return new ModelAndView("index");
+//        }
+    }
 }

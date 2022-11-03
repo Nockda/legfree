@@ -6,12 +6,10 @@ import com.glasgow.tapp.service.ErrorInfoService;
 import com.glasgow.tapp.service.VehicleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Hongbin BAO
@@ -20,19 +18,26 @@ import java.util.List;
 @ResponseBody
 @RestController
 @Slf4j
-public class ErrorInfoController {
+public class ErrorInfoController extends SuperController {
 
     @Autowired
     private ErrorInfoService errorInfoService;
 
 
     /**
-     *查询可用车辆
+     *操作员查询 报告车辆详情
      */
     @RequestMapping(value = "errorInfo/getErrorInfo",method = RequestMethod.GET)
     public List<ErrorInfo> getErrorInfo(){
         return errorInfoService.getErrorInfo();
     }
 
-
+    /**
+     * 新增错误信息
+     */
+    @RequestMapping(value = "errorInfo/insertErrorInfo",method = RequestMethod.POST)
+    public String insertErrorInfo(@RequestBody Map<String,String> param)
+    {
+        return errorInfoService.insertErrorInfo(param.get("vehicleId"),param.get("message"),String.valueOf(getCurrentUser().getUserId()));
+    }
 }

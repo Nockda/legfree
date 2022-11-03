@@ -51,10 +51,9 @@ public class VehicleController extends SuperController{
      * 根据id 更新车辆状态
      */
     @RequestMapping(value = "vehicle/setVehicleStateById",method = RequestMethod.POST)
-    public String setVehicleStateById(@RequestParam(value = "id", required = true)  String id,
-                                      @RequestParam(value = "userId", required = true)  String userId,
-                                      @RequestParam(value = "time", required = true)  int  time){
-        return vehicleService.setVehicleStateById(id,userId,time);
+    public String setVehicleStateById(@RequestBody Map<String,String> param){
+        return vehicleService.setVehicleStateById(param.get("vehicleId"),String.valueOf(getCurrentUser().getUserId()), Integer.parseInt(param.get("time")),
+                param.get("location") );
     }
 
 //    /**
@@ -63,4 +62,22 @@ public class VehicleController extends SuperController{
 //    @RequestMapping(value = "vehicle/updateVehicleDurableById",method = RequestMethod.POST)
 //    public String updateVehicleDurableById(@RequestParam(value = "id", required = true)  String id){
 //
+
+    /**
+     * 根据车辆id 修改durable值
+     */
+    @RequestMapping(value = "vehicle/updateVehicleDurableById",method = RequestMethod.POST)
+    public String updateVehicleDurableById(@RequestBody Map<String,String> param){
+        return vehicleService.updateVehicleDurableById(param.get("vehicleId"));
+    }
+
+
+
+    /**
+     * 根据车辆id 修改durable值
+     */
+    @RequestMapping(value = "vehicle/updateVehicleBatteryById",method = RequestMethod.POST)
+    public String updateVehicleBatteryById(@RequestBody Map<String,String> param){
+        return vehicleService.updateVehicleBatteryById(param.get("vehicleId"));
+    }
 }
