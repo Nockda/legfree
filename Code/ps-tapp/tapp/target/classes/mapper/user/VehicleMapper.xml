@@ -33,6 +33,25 @@
         where  vehicle_id = #{vehicleId}
     </select>
 
+    <update id="setVehicleLocationById">
+        update  vehicle_info
+        set vehicle_location = #{location}
+        where vehicle_id = #{vehicleId}
+    </update>
+
+
+    <update id="updateVehicleDurableById">
+        update vehicle_info
+        set vehicle_durable = 100
+        where vehicle_id = #{vehicleId}
+    </update>
+
+
+    <update id="updateVehicleBatteryById">
+        update vehicle_info
+        set vehicle_battery = 100
+        where vehicle_id = #{vehicleId}
+    </update>
 
 
 </mapper>
