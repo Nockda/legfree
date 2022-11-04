@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-for="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="application/javascript" src="/js/axios.js"></script>
+    <script type="application/javascript" src="/js/vue.js"></script>
+</head>
+<body>
+
+
+<div id="app">
+    <table>
+        <tr>
+            <td>vehicleId</td>
+            <td>vehicleName</td>
+            <td>vehicleLocation</td>
+            <td>vehicleFree</td>
+            <td>vehicleDurable</td>
+            <td>vehicleBattery</td>
+            <td>vehicleState</td>
+        </tr>
+        <tr v-for="item in bikeData">
+            <td>{{item.vehicleId}}</td>
+            <td>{{item.vehicleName}}</td>
+            <td>{{item.vehicleLocation}}</td>
+            <td>{{item.vehicleFree}}</td>
+            <td>{{item.vehicleDurable}}</td>
+            <td>{{item.vehicleBattery}}</td>
+            <td>{{item.vehicleState}}</td>
+        </tr>
+    </table>
+
+    <div>
+        <div>
+
+        </div>
+        <div>
+
+        </div>
+        <input id="vehicleId" placeholder="vehicleId">
+        <button id="fixBattery" onclick="fixBattery()">fixBattery</button>
+        <button id="fixDurable" onclick="fixDurable()">fixDurable</button>
+    </div>
+</div>
+
+
+
+<div id="issue">
+    <table>
+        <tr>
+            <td>errorId</td>
+            <td>userId</td>
+            <td>vehicleId</td>
+            <td>message</td>
+        </tr>
+        <tr v-for="item in bikeData">
+            <td>{{item.errorId}}</td>
+            <td>{{item.userId}}</td>
+            <td>{{item.vehicleId}}</td>
+            <td>{{item.message}}</td>
+        </tr>
+    </table>
+
+    <div>
+        <div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<div>
+
+</div>
+</body>
+<script>
+    var vm=new Vue({
+        el:"#app",
+        data:{
+            bikeData:[]
+        },
+        mounted(){
+
+            axios({
+                method:"get",
+                url:"/vehicle/getVehicleInfo",
+
+            }).then(response=>{
+                this.bikeData=response.data;
+            });
+        },
+        methods:{
+
+        }
+    });
+
+
+</script>
+
+
+<script>
+    var vm=new Vue({
+        el:"#issue",
+        data:{
+            bikeData:[]
+        },
+        mounted(){
+
+            axios({
+                method:"get",
+                url:"errorInfo/getErrorInfo",
+
+            }).then(response=>{
+                this.bikeData=response.data;
+            });
+        },
+        methods:{
+
+        }
+    });
+
+
+</script>
+
+
+<script type="text/javascript">
+
+    function fixBattery(){
+        var vehicleId = document.getElementById("vehicleId").value;
+
+        //参数
+        axios({
+            method: "POST",
+            url: "/vehicle/updateVehicleBatteryById",
+            data: {
+                vehicleId: vehicleId,
+
+            }
+        }).then(
+            response=>{
+                window.location.href="/operator";
+
+            }
+        );
+    }
+</script>
+
+
+
+<script type="text/javascript">
+
+    function fixDurable(){
+        var vehicleId = document.getElementById("vehicleId").value;
+
+        //参数
+        axios({
+            method: "POST",
+            url: "/vehicle/updateVehicleDurableById",
+            data: {
+                vehicleId: vehicleId,
+
+            }
+        }).then(
+            response=>{
+                window.location.href="/operator";
+
+            }
+        );
+    }
+</script>
+
+
+</html>

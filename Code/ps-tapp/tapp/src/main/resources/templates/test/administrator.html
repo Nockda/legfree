@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-for="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script type="application/javascript" src="/js/axios.js"></script>
+  <script type="application/javascript" src="/js/vue.js"></script>
+</head>
+<body>
+
+
+<div id="app">
+  <table>
+    <tr>
+      <td>vehicleId</td>
+      <td>vehicleName</td>
+      <td>vehicleLocation</td>
+      <td>vehicleFree</td>
+      <td>vehicleDurable</td>
+      <td>vehicleBattery</td>
+      <td>vehicleState</td>
+    </tr>
+    <tr v-for="item in bikeData">
+      <td>{{item.vehicleId}}</td>
+      <td>{{item.vehicleName}}</td>
+      <td>{{item.vehicleLocation}}</td>
+      <td>{{item.vehicleFree}}</td>
+      <td>{{item.vehicleDurable}}</td>
+      <td>{{item.vehicleBattery}}</td>
+      <td>{{item.vehicleState}}</td>
+    </tr>
+  </table>
+
+  <div>
+    <div>
+
+    </div>
+    <div>
+
+    </div>
+
+  </div>
+</div>
+<div>
+
+</div>
+
+<div>
+
+</div>
+</body>
+<script>
+  var vm=new Vue({
+    el:"#app",
+    data:{
+      bikeData:[]
+    },
+    mounted(){
+
+      axios({
+        method:"get",
+        url:"/vehicle/getVehicleInfo",
+
+      }).then(response=>{
+        this.bikeData=response.data;
+      });
+    },
+    methods:{
+
+    }
+  });
+
+
+</script>
+
+
+
+
+
+
+
+</html>

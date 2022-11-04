@@ -197,4 +197,16 @@ public class LoginController extends SuperController {
 //        return new ModelAndView("index");
 //        }
     }
+
+
+    @RequestMapping("/administrator")
+    public ModelAndView administratorInfo(HttpServletResponse response) throws IOException {
+        User user=getCurrentUser();
+//        if(user==null){
+        return new ModelAndView("/test/administrator");
+//        }else {
+//        response.sendRedirect("index");
+//        return new ModelAndView("index");
+//        }
+    }
 }

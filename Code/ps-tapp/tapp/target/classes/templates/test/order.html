@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-for="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="application/javascript" src="/js/axios.js"></script>
+    <script type="application/javascript" src="/js/vue.js"></script>
+</head>
+<body>
+
+
+<div id="app">
+    <table>
+        <tr>
+            <td>orderId</td>
+            <td>userId</td>
+            <td>vehicleId</td>
+            <td>time</td>
+            <td>orderMoney</td>
+            <td>state</td>
+            <td>createTime</td>
+        </tr>
+        <tr v-for="item in bikeData">
+            <td>{{item.orderId}}</td>
+            <td>{{item.userId}}</td>
+            <td>{{item.vehicleId}}</td>
+            <td>{{item.time}}</td>
+            <td>{{item.orderMoney}}</td>
+            <td>{{item.state}}</td>
+            <td>{{item.createTime}}</td>
+        </tr>
+    </table>
+
+    <div>
+
+        <input id="orderId" placeholder="订单id">
+        <button id="ok" onclick="jump()">pay</button>
+    </div>
+</div>
+
+
+
+<div id="money">
+    <table>
+        <tr>
+            <td>money</td>
+
+        </tr>
+        <tr >
+            <td>{{bikeData.money}}</td>
+
+        </tr>
+    </table>
+
+
+</div>
+</body>
+<script>
+    var vm=new Vue({
+        el:"#app",
+        data:{
+            bikeData:[]
+        },
+        mounted(){
+
+            axios({
+                method:"get",
+                url:"order/getOrderInfoByUserId",
+
+            }).then(response=>{
+                this.bikeData=response.data;
+            });
+        },
+        methods:{
+
+        }
+    });
+
+
+</script>
+
+
+<script type="text/javascript">
+
+    function jump(){
+        var orderId = document.getElementById("orderId").value;
+        //参数
+        axios({
+            method: "POST",
+            url: "/order/updateOrderStateByOrderId",
+            data: {
+                orderId: orderId,
+
+            }
+        }).then(
+            response=>{
+                window.location.href="/orderInfo";
+
+            }
+        );
+    }
+</script>
+
+
+
+<script>
+    var money=new Vue({
+        el:"#money",
+        data:{
+            bikeData:[]
+        },
+        mounted(){
+
+            axios({
+                method:"get",
+                url:"user/getUserMoneyByUserName",
+
+            }).then(response=>{
+                this.bikeData=response.data;
+            });
+        },
+        methods:{
+
+        }
+    });
+
+
+</script>
+</html>
