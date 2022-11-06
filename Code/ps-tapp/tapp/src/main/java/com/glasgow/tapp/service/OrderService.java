@@ -49,17 +49,16 @@ public class OrderService {
 
         //get money which is in  user table
         int money = userDao.getUserMoneyByUserId(orderInfo.getUserId());
-        //更新用户表里的账户余额up date money
+        //up date money
         int remainMoney = money - orderMoney;
-
+        //sql for update UserMoney
         userDao.updateUserMoneyByUserId(remainMoney,userId);
 
 
-
-        //根据车辆编号查询车辆信息 get vehicle info by vehicleId
+        // get vehicle info by vehicleId
         Vehicle vehicleInfo = new Vehicle();
         vehicleInfo = vehicleDao.getVehicleInfoById(orderInfo.getVehicleId());
-        //更新工具状态 update vehicle state
+        //update vehicle state
         int vehicleDurable = vehicleInfo.getVehicleDurable() - orderInfo.getTime();
         int vehicleBattery = vehicleInfo.getVehicleBattery() - orderInfo.getTime();
         vehicleService.updateVehicleInfoById(orderInfo.getVehicleId(),vehicleDurable,vehicleBattery);

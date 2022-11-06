@@ -34,7 +34,7 @@ public interface VehicleDao {
     List<Vehicle> getVehicleInfoByLocation(String location);
 
     /**
-     * 更改车辆状态
+     * change vehicleState by id
      * @param id
      */
     void setVehicleStateById(String id);
@@ -50,4 +50,6 @@ public interface VehicleDao {
 
 
     int updateVehicleBatteryById(String vehicleId);
+
+    int getVehicleMoneyById(String vehicleId);
 }

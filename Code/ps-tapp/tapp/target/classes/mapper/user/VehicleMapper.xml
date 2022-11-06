@@ -54,4 +54,10 @@
     </update>
 
 
+    <select id="getVehicleMoneyById" resultType="java.lang.Integer">
+        select vehicle_free from vehicle_info
+        where vehicle_id = #{id}
+    </select>
+
+
 </mapper>

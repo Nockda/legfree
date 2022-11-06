@@ -49,25 +49,27 @@ public class VehicleService {
     }
 
     public String setVehicleStateById(String id,String userId,int time,String location) {
-
+        // change vehicle state
         vehicleDao.setVehicleStateById(id);
-
+        //change vehicle station
         vehicleDao.setVehicleLocationById(location,id);
-
+        //Generate order number
         String orderId = "";
         Random random = new Random();
         for (int i = 0; i < 10; i++) {
             orderId += String.valueOf(random.nextInt(10));
         }
 
-
+        // generate order info
         Map orderMap = new HashMap();
 
         orderMap.put("orderId",orderId);
         orderMap.put("userId",userId);
         orderMap.put("time",time);
         orderMap.put("vehicleId",id);
-        int  orderMoney =  time*10;
+
+        int  vehicleMoney = vehicleDao.getVehicleMoneyById(id);
+        int  orderMoney =  time * vehicleMoney;
         orderMap.put("orderMoney",orderMoney);
         orderMap.put("state","0");
         orderMap.put("createTime",new Date());

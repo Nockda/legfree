@@ -48,11 +48,12 @@ public class VehicleController extends SuperController{
 
 
     /**
-     * 根据id 更新车辆状态
+     * update vehicle State By ID
      */
     @RequestMapping(value = "vehicle/setVehicleStateById",method = RequestMethod.POST)
     public String setVehicleStateById(@RequestBody Map<String,String> param){
-        return vehicleService.setVehicleStateById(param.get("vehicleId"),String.valueOf(getCurrentUser().getUserId()), Integer.parseInt(param.get("time")),
+        return vehicleService.setVehicleStateById(param.get("vehicleId"),String.valueOf(getCurrentUser().getUserId()),
+                Integer.parseInt(param.get("time")),
                 param.get("location") );
     }
 
