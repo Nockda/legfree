@@ -6,40 +6,43 @@
 	<title>Consumer Page</title>
 	<link rel="stylesheet" type="text/css" href="/js/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="/js/themes/icon.css">
-<!--
-	<link rel="stylesheet" type="text/css" href="../demo.css">
--->
+	<!--
+        <link rel="stylesheet" type="text/css" href="../demo.css">
+    -->
 	<script type="text/javascript" src="/js/jquery.min.js"></script>
 	<script type="text/javascript" src="/js/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="/js/axios.js"></script>
 
 </head>
 <body>
-	<h2>Let's be leg free!</h2>
-	<div style="margin:20px 0;"></div>
-	<table id="dg" class="easyui-datagrid" title="Vehicle List" style="width:700px;height:250px"
-		   data-options="rownumbers:true,singleSelect:true,url:'/vehicle/getVehicleInfo',method:'get',toolbar:toolbar">
-		<thead>
-		<tr>
-			<th data-options="field:'vehicleId',width:100">Vehicle No</th>
-			<th data-options="field:'vehicleName',width:120">Vehicle Name</th>
-			<th data-options="field:'vehicleLocation',width:100">Location</th>
-			<th data-options="field:'vehicleFree',width:100">Fee Per Hour</th>
-			<th data-options="field:'vehicleDurable',width:80">Durablity</th>
-			<th data-options="field:'vehicleBattery',width:80">Battery</th>
-			<th data-options="field:'vehicleState',width:90">Status</th>
+<h2>Let's be leg free!</h2>
+<div style="margin:20px 0;"></div>
+<table id="dg" class="easyui-datagrid" title="Vehicle List" style="width:700px;height:250px"
+	   data-options="rownumbers:true,singleSelect:true,url:'/vehicle/getVehicleInfo',method:'get',toolbar:toolbar">
+	<thead>
+	<tr>
+		<th data-options="field:'vehicleId',width:100">Vehicle No</th>
+		<th data-options="field:'vehicleName',width:120">Vehicle Name</th>
+		<th data-options="field:'vehicleLocation',width:100">Location</th>
+		<th data-options="field:'vehicleFree',width:100">Fee Per Hour</th>
+		<th data-options="field:'vehicleDurable',width:80">Durablity</th>
+		<th data-options="field:'vehicleBattery',width:80">Battery</th>
+		<th data-options="field:'vehicleState',width:90">Status</th>
 
 
-		</tr>
-		</thead>
-	</table>
-	<script type="text/javascript">
-		var user_id = "${userId}";
-		var toolbar = [{
-			text:'Rent',
-			iconCls:'icon-add',
-			handler:function(){
-				var row = $('#dg').datagrid('getSelected');
+	</tr>
+	</thead>
+</table>
+<script type="text/javascript">
+	var user_id = "${userId}";
+	var toolbar = [{
+		text:'Rent',
+		iconCls:'icon-add',
+		handler:function(){
+			var row = $('#dg').datagrid('getSelected');
+			if(row.vehicleState != 'Normal'){
+				$.messager.alert('Rent','Sorry,this vehicle cannot be rented！','warning');
+			}else{
 				var vehicle = row.vehicleId;
 				var vehicle_fee = row.vehicleFree;
 				var vehicle_location = row.vehicleLocation;
@@ -50,53 +53,53 @@
 						userId: user_id,
 						vehicleId: vehicle,
 						vehicleFee: vehicle_fee,
-						vehicleLocation:vehicle_location
+						vehicleLocation: vehicle_location
 					}
 				}).then(
 						response => {
 							console.log(response.data);
 							if (response.data.data != "success") {
 								var order_id = response.data.data;
-								var user = order_id+"," +user_id +","+ vehicle+","+vehicle_fee+"," + vehicle_location;
+								var user = order_id + "," + user_id + "," + vehicle + "," + vehicle_fee + "," + vehicle_location;
 								url = "/toRenting/";
 								window.location.href = url + user;
 							} else {
 								// login denied
-								$.messager.alert('Rent','Sorry,the network seems to be broken down！','warning');
+								$.messager.alert('Rent', 'Sorry,the network seems to be broken down！', 'warning');
 							}
 
 						}
 				);
 
-
-				}
-		},{
-			text:'Report',
-			iconCls:'icon-tip',
-			handler:function(){
-				var row = $('#dg').datagrid('getSelected');
-				var vehicle = row.vehicleId;
-				user_id = user_id +","+ vehicle;
-				url = "/toReporting/";
-				window.location.href = url+user_id;
 			}
-		},{
-			text:'Renting History',
-			iconCls:'icon-save',
-			handler:function(){
-				url = "/toRentingHis/";
-				window.location.href = url+user_id;
+		}
+	},{
+		text:'Report',
+		iconCls:'icon-tip',
+		handler:function(){
+			var row = $('#dg').datagrid('getSelected');
+			var vehicle = row.vehicleId;
+			user_id = user_id +","+ vehicle;
+			url = "/toReporting/";
+			window.location.href = url+user_id;
+		}
+	},{
+		text:'Renting History',
+		iconCls:'icon-save',
+		handler:function(){
+			url = "/toRentingHis/";
+			window.location.href = url+user_id;
 
 
-			}
-		},'-', {
-			text: 'Log Out',
-			iconCls: 'icon-back',
-			handler: function () {
-				url = "/toLogin";
-				window.location.href = url;
-			}
-		}];
-	</script>
+		}
+	},'-', {
+		text: 'Log Out',
+		iconCls: 'icon-back',
+		handler: function () {
+			url = "/toLogin";
+			window.location.href = url;
+		}
+	}];
+</script>
 </body>
 </html>
