@@ -96,8 +96,9 @@ public class UserServiceImpl implements UserService {
 
     public String updateUserMoneyByUserId(String money ,String userId) {
 
-
-        userDao.updateUserMoneyByUserId(Integer.parseInt(money),userId);
+        int userCurrentMoney = userDao.getUserMoneyByUserId(userId);
+        int userMoney = userCurrentMoney+Integer.parseInt(money);
+        userDao.updateUserMoneyByUserId(userMoney,userId);
         return "success";
     }
 }

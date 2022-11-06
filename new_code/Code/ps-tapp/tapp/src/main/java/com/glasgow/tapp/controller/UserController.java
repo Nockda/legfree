@@ -107,10 +107,10 @@ public class UserController extends SuperController {
 
 
 
-    @RequestMapping(value = "user/getUserMoneyByUserName",method = RequestMethod.POST)
+    @RequestMapping(value = "user/updateMoneyByUserName",method = RequestMethod.POST)
     public String updateUserMoneyByUserName(@RequestBody Map<String,String> param){
 
         param.put("userId",getCurrentUser().getUserId().toString());
-        return userServiceImpl.updateUserMoneyByUserId(param.get("money"),param.get("userId"));
+        return userServiceImpl.updateUserMoneyByUserId(param.get("moneyId"),param.get("userId"));
     }
 }

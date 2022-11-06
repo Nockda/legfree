@@ -115,6 +115,7 @@
 
 
 </div>
+<input id="moneyId" placeholder="moneyId">
 <button class="btn" id="charge" onclick="charge()">charge</button>
 
 </body>
@@ -152,20 +153,20 @@
 
 <script type="text/javascript">
 
-    function fixBattery(){
-        var vehicleId = document.getElementById("vehicleId").value;
+    function charge(){
+        var moneyId = document.getElementById("moneyId").value;
 
         //参数
         axios({
             method: "POST",
-            url: "/vehicle/updateVehicleBatteryById",
+            url: "/user/updateMoneyByUserName",
             data: {
-                vehicleId: vehicleId,
+                moneyId: moneyId,
 
             }
         }).then(
             response=>{
-                window.location.href="/operator";
+                window.location.href="/moneyInfo";
 
             }
         );
