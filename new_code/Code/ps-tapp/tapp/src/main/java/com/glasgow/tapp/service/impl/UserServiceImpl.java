@@ -9,7 +9,11 @@ import com.glasgow.tapp.service.UserService;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -81,9 +85,19 @@ public class UserServiceImpl implements UserService {
      * @param userName
      * @return
      */
-    public int getUserMoneyByUserName(String userName ){
+    public Map getUserMoneyByUserName(String userName ){
         int money;
         money = userDao.getUserMoneyByUserName(userName);
-        return money;
+        Map<String,String> moneyMap = new HashMap<>();
+        moneyMap.put("money",String.valueOf(money));
+        return moneyMap;
+    }
+
+
+    public String updateUserMoneyByUserId(String money ,String userId) {
+
+
+        userDao.updateUserMoneyByUserId(Integer.parseInt(money),userId);
+        return "success";
     }
 }

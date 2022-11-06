@@ -87,50 +87,21 @@
 	</script>
 
 
-	<div id="money">
-		<table>
-			<tr>
-				<td>money</td>
-
-			</tr>
-			<tr >
-				<td>{{bikeData.money}}</td>
-
-			</tr>
-		</table>
-
-
-	</div>
+	<button class="btn"id="money" onclick="money()">money</button>
 
 
 </body>
 
 
+<script type="text/javascript">
 
+	function money(){
 
-<script>
-	var money=new Vue({
-		el:"#money",
-		data:{
-			bikeData:[]
-		},
-		mounted(){
+		window.location.href="/moneyInfo";
 
-			axios({
-				method:"get",
-				url:"user/getUserMoneyByUserName",
-
-			}).then(response=>{
-				this.bikeData=response.data;
-			});
-		},
-		methods:{
-
-		}
-	});
-
-
+	}
 </script>
+
 
 
 </html>

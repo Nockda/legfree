@@ -157,4 +157,15 @@ public class LoginController extends SuperController {
     }
 
 
+    @RequestMapping("/moneyInfo")
+    public ModelAndView setVehicleInfo(HttpServletResponse response) throws IOException {
+        User user=getCurrentUser();
+//        if(user==null){
+        return new ModelAndView("/user/money");
+//        }else {
+//        response.sendRedirect("index");
+//        return new ModelAndView("index");
+//        }
+    }
+
 }

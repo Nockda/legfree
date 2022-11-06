@@ -27,8 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Controller
-public class UserController {
+@RestController
+public class UserController extends SuperController {
 
 
     @Autowired
@@ -40,12 +40,11 @@ public class UserController {
     /**
      *查询账户余额
      */
-    @RequestMapping("user/getUserMoneyByUserName")
-    public int getUserMoneyByUserName(@RequestParam(value = "userName", required = true)  String userName){
-       return userServiceImpl.getUserMoneyByUserName(userName);
+    @RequestMapping(value = "user/getUserMoneyByUserName",method = RequestMethod.GET)
+    public Map getUserMoneyByUserName(){
+
+        return userServiceImpl.getUserMoneyByUserName(String.valueOf(getCurrentUser().getUserName()));
     }
-
-
 
     @RequestMapping ("/toRenting/{user}")
     public ModelAndView toRenting(@PathVariable  String user, HttpServletRequest request)  {
@@ -107,4 +106,11 @@ public class UserController {
     }
 
 
+
+    @RequestMapping(value = "user/getUserMoneyByUserName",method = RequestMethod.POST)
+    public String updateUserMoneyByUserName(@RequestBody Map<String,String> param){
+
+        param.put("userId",getCurrentUser().getUserId().toString());
+        return userServiceImpl.updateUserMoneyByUserId(param.get("money"),param.get("userId"));
+    }
 }
