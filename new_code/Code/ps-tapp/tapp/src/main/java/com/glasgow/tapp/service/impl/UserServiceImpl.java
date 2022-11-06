@@ -82,14 +82,14 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 根据用户名查找用户账户余额
-     * @param userName
+     * @param
      * @return
      */
-    public Map getUserMoneyByUserName(String userName ){
-        int money;
-        money = userDao.getUserMoneyByUserName(userName);
+    public Map getUserMoneyByUserName(int userId ){
+
+        User user = userDao.getUserMoneyByUserName(userId);
         Map<String,String> moneyMap = new HashMap<>();
-        moneyMap.put("money",String.valueOf(money));
+        moneyMap.put("money",String.valueOf(user.getMoney()));
         return moneyMap;
     }
 

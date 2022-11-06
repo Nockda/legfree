@@ -84,9 +84,9 @@
     </delete>
 
 
-    <select id="getUserMoneyByUserName" resultType="int">
-        select money from user
-        where  user_name=#{userName}
+    <select id="getUserMoneyByUserName" resultType="com.glasgow.tapp.pojo.User">
+        select * from user
+        where  user_id=#{userId}
     </select>
 
 

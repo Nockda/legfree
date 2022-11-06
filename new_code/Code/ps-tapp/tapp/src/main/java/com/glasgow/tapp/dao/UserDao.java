@@ -69,7 +69,7 @@ public interface UserDao {
      */
     int deleteUser(Integer[] userIds);
 
-    int getUserMoneyByUserName(String userName);
+    User getUserMoneyByUserName(int userId);
 
     int updateUserMoneyByUserId(int money, String userId);
 

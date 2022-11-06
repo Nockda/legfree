@@ -43,7 +43,7 @@ public class UserController extends SuperController {
     @RequestMapping(value = "user/getUserMoneyByUserName",method = RequestMethod.GET)
     public Map getUserMoneyByUserName(){
 
-        return userServiceImpl.getUserMoneyByUserName(String.valueOf(getCurrentUser().getUserName()));
+        return userServiceImpl.getUserMoneyByUserName(getCurrentUser().getUserId());
     }
 
     @RequestMapping ("/toRenting/{user}")

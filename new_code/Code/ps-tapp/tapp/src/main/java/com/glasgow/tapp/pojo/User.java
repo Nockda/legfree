@@ -20,7 +20,7 @@ public class User implements Serializable {
     private String password;
     private String salt;
     private Integer level;
-    private Integer money;
+    private Long money;
     private String  userLocation;
     @JsonFormat(locale = "zh",timezone = "GMT+8",pattern="yyyy-MM-dd HH:mm:ss")
     private Date createdTime;
