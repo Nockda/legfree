@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="/js/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/js/themes/icon.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/js/axios.js"></script>
+</head>
+<body>
+<h2>Welcome to LEGFREE!</h2>
+<div style="margin:20px 0;"></div>
+<div class="easyui-panel" style="width:400px;padding:50px 60px">
+    <div style="margin-bottom:20px">
+        <input class="easyui-textbox" id="username"  iconWidth="28" style="width:100%;height:34px;padding:10px;">
+    </div>
+    <div style="margin-bottom:20px">
+        <input class="easyui-passwordbox" id="password"  iconWidth="28" style="width:100%;height:34px;padding:10px">
+    </div>
+    <div style="margin-bottom:20px">
+        <a href="#" class="easyui-linkbutton" onclick="getLogIn()">log in</a>
+    </div>
+</div>
+<div id="viewer"></div>
+
+<script type="text/javascript">
+    function getLogIn(){
+        //record the user information
+        var user_id = $("#username").val();
+        var pwd = $("#password").val();
+//        alert(user_id);
+        //use ajax to send data to back-end for checking the validation of user and get certain return from back-end
+        axios({
+            method:"POST",
+            url:"/doLogin",
+            data:{
+                userAccount:user_id,
+                password:pwd
+            }
+        }).then(
+            response=>{
+                console.log(response.data);
+                if (response.data.state==1){
+                    var login_sts = response.data.state;
+                    var type = response.data.data;
+                    // Jump to the different page according to the user's  login status and limits of authority
+                    if(login_sts == "1") {
+                        if (type == "3") {
+                            url1 = "/toManager/" + user_id+",no,no";
+                        } else if (type == "1") {
+                            url1 = "/toOperator/" + user_id;
+                        } else if (type == "5") {
+                            url1 = "/toConsumer/" + user_id;
+                        }
+                        window.location.href = url1;
+                    } else {
+                        // login denied
+                        $.messager.alert('Login','Username or password is wrong！','warning');
+
+                    }
+                    //document.getElementById("abc").innerText = response.data.state;
+                }
+            }
+        );
+    }
+</script>
+<style>
+    #viewer{
+        position: relative;
+        padding: 0 60px;
+        top: -70px;
+        font-size: 54px;
+        line-height: 60px;
+    }
+
+
+
+
+</style>
+</body>
+</html>
+
+
+
+<!--    <style>-->
+<!--        * {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--        }-->
+
+<!--        a {-->
+<!--            text-decoration: none;-->
+<!--        }-->
+
+<!--        input,-->
+<!--        button {-->
+<!--            background: transparent;-->
+<!--            border: 0;-->
+<!--            outline: none;-->
+<!--        }-->
+
+<!--        body {-->
+<!--            height: 100vh;-->
+<!--            background: linear-gradient(#141e30, #243b55);-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            align-items: center;-->
+<!--            font-size: 16px;-->
+<!--            color: #03e9f4;-->
+<!--        }-->
+
+<!--        .loginBox {-->
+<!--            width: 400px;-->
+<!--            height: 364px;-->
+<!--            background-color: #0c1622;-->
+<!--            margin: 100px auto;-->
+<!--            border-radius: 10px;-->
+<!--            box-shadow: 0 15px 25px 0 rgba(0, 0, 0, .6);-->
+<!--            padding: 40px;-->
+<!--            box-sizing: border-box;-->
+<!--        }-->
+
+<!--        h2 {-->
+<!--            text-align: center;-->
+<!--            color: aliceblue;-->
+<!--            margin-bottom: 30px;-->
+<!--            font-family: 'Courier New', Courier, monospace;-->
+<!--        }-->
+
+<!--        .item {-->
+<!--            height: 45px;-->
+<!--            border-bottom: 1px solid #fff;-->
+<!--            margin-bottom: 40px;-->
+<!--            position: relative;-->
+<!--        }-->
+
+<!--        .item input {-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            color: #fff;-->
+<!--            padding-top: 20px;-->
+<!--            box-sizing: border-box;-->
+<!--        }-->
+
+<!--        .item input:focus+label,-->
+<!--        .item input:valid+label {-->
+<!--            top: 0px;-->
+<!--            font-size: 2px;-->
+<!--        }-->
+
+<!--        .item label {-->
+<!--            position: absolute;-->
+<!--            left: 0;-->
+<!--            top: 12px;-->
+<!--            transition: all 0.5s linear;-->
+<!--        }-->
+
+<!--        .btn {-->
+<!--            padding: 10px 20px;-->
+<!--            margin-top: 30px;-->
+<!--            color: #03e9f4;-->
+<!--            position: relative;-->
+<!--            overflow: hidden;-->
+<!--            text-transform: uppercase;-->
+<!--            letter-spacing: 2px;-->
+<!--            left: 35%;-->
+<!--        }-->
+
+<!--        .btn:hover {-->
+<!--            border-radius: 5px;-->
+<!--            color: #fff;-->
+<!--            background: #03e9f4;-->
+<!--            box-shadow: 0 0 5px 0 #03e9f4,-->
+<!--            0 0 25px 0 #03e9f4,-->
+<!--            0 0 50px 0 #03e9f4,-->
+<!--            0 0 100px 0 #03e9f4;-->
+<!--            transition: all 1s linear;-->
+<!--        }-->
+
+<!--        .btn>span {-->
+<!--            position: absolute;-->
+<!--        }-->
+
+<!--        .btn>span:nth-child(1) {-->
+<!--            width: 100%;-->
+<!--            height: 2px;-->
+<!--            background: -webkit-linear-gradient(left, transparent, #03e9f4);-->
+<!--            left: -100%;-->
+<!--            top: 0px;-->
+<!--            animation: line1 1s linear infinite;-->
+<!--        }-->
+
+<!--        @keyframes line1 {-->
+
+<!--            50%,-->
+<!--            100% {-->
+<!--                left: 100%;-->
+<!--            }-->
+<!--        }-->
+
+<!--        .btn>span:nth-child(2) {-->
+<!--            width: 2px;-->
+<!--            height: 100%;-->
+<!--            background: -webkit-linear-gradient(top, transparent, #03e9f4);-->
+<!--            right: 0px;-->
+<!--            top: -100%;-->
+<!--            animation: line2 1s 0.25s linear infinite;-->
+<!--        }-->
+
+<!--        @keyframes line2 {-->
+
+<!--            50%,-->
+<!--            100% {-->
+<!--                top: 100%;-->
+<!--            }-->
+<!--        }-->
+
+<!--        .btn>span:nth-child(3) {-->
+<!--            width: 100%;-->
+<!--            height: 2px;-->
+<!--            background: -webkit-linear-gradient(left, #03e9f4, transparent);-->
+<!--            left: 100%;-->
+<!--            bottom: 0px;-->
+<!--            animation: line3 1s 0.75s linear infinite;-->
+<!--        }-->
+
+<!--        @keyframes line3 {-->
+
+<!--            50%,-->
+<!--            100% {-->
+<!--                left: -100%;-->
+<!--            }-->
+<!--        }-->
+
+<!--        .btn>span:nth-child(4) {-->
+<!--            width: 2px;-->
+<!--            height: 100%;-->
+<!--            background: -webkit-linear-gradient(top, transparent, #03e9f4);-->
+<!--            left: 0px;-->
+<!--            top: 100%;-->
+<!--            animation: line4 1s 1s linear infinite;-->
+<!--        }-->
+
+<!--        @keyframes line4 {-->
+
+<!--            50%,-->
+<!--            100% {-->
+<!--                top: -100%;-->
+<!--            }-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div class="loginBox">-->
+<!--        <h2>Welcome to Legfree!</h2>-->
+<!--        <form action="">-->
+<!--         <div class="item">-->
+<!--            <input type="text" required>-->
+<!--            <label for="userName">userName</label>-->
+<!--         </div>-->
+<!--         <div class="item">-->
+<!--            <input type="password" required>-->
+<!--            <label for="password">password</label>-->
+<!--         </div>-->
+
+<!--    <div>-->
+<!--        <input id="userName">-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <input id="password" type="password">-->
+<!--    </div>-->
+<!--            <button class="btn" onclick="getLogIn()">Login-->
+<!--                <span></span>-->
+<!--                <span></span>-->
+<!--                <span></span>-->
+<!--                <span></span>-->
+<!--            </button>-->
+<!--         </form>-->
+<!--    </div>-->
+<!--</body>-->
+<!--<script type="text/javascript">-->
+<!--    // The js of hiding and showing the password-->
+<!--    // $('#pass').passwordbox({-->
+<!--    //     inputEvents: $.extend({}, $.fn.passwordbox.defaults.inputEvents, {-->
+<!--    //         keypress: function(e){-->
+<!--    //             var char = String.fromCharCode(e.which);-->
+<!--    //             $('#viewer').html(char).fadeIn(200, function(){-->
+<!--    //                 $(this).fadeOut();-->
+<!--    //             });-->
+<!--    //         }-->
+<!--    //     })-->
+<!--    // })-->
+<!--    function getLogIn(){-->
+<!--        //record the user information-->
+<!--        var user_id = document.getElementById("username").value;-->
+<!--        var pwd = document.getElementById("password").value;-->
+<!--        //use ajax to send data to back-end for checking the validation of user and get certain return from back-end-->
+<!--        axios({-->
+<!--            method:"POST",-->
+<!--            url:"/doLogin",-->
+<!--            data:{-->
+<!--                userAccount:user_id,-->
+<!--                password:pwd-->
+<!--            }-->
+<!--        }).then(-->
+<!--            response=>{-->
+<!--                console.log(response.data);-->
+<!--                if (response.data.state==1){-->
+<!--                    var login_sts = response.data.state;-->
+<!--                    var type = response.data.message;-->
+<!--                    alert(login_sts,type);-->
+<!--                    // Jump to the different page according to the user's  login status and limits of authority-->
+<!--                    if(login_sts == "1") {-->
+<!--                        if (type == "3") {-->
+<!--                            url1 = "manager.html?user_id=" + user_id;-->
+<!--                        } else if (type == "1") {-->
+<!--                            url1 = "operator.html?user_id=" + user_id;-->
+<!--                        } else if (type == "5") {-->
+<!--                            url1 = "consumer.html?user_id=" + user_id;-->
+<!--                        }-->
+<!--                        window.location.href = url1;-->
+<!--                    } else {-->
+<!--                        // login denied-->
+<!--                        alert("Username or password is wrong！");-->
+<!--                    }-->
+<!--                    //document.getElementById("abc").innerText = response.data.state;-->
+<!--                }-->
+<!--            }-->
+<!--        );-->
+<!--    }-->
+<!--</script>-->
+<!--</html>-->
+<!--
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登录</title>
+    <script type="text/javascript" src="/js/axios.js"></script>
+
+&lt;!&ndash;    <style>&ndash;&gt;
+&lt;!&ndash;        * {&ndash;&gt;
+&lt;!&ndash;            margin: 0;&ndash;&gt;
+&lt;!&ndash;            padding: 0;&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        a {&ndash;&gt;
+&lt;!&ndash;            text-decoration: none;&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        input,&ndash;&gt;
+&lt;!&ndash;        button {&ndash;&gt;
+&lt;!&ndash;            background: transparent;&ndash;&gt;
+&lt;!&ndash;            border: 0;&ndash;&gt;
+&lt;!&ndash;            outline: none;&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        body {&ndash;&gt;
+
+&lt;!&ndash;            /*height: 100vh;*/&ndash;&gt;
+&lt;!&ndash;            /*background: linear-gradient(#141e30, #243b55);*/&ndash;&gt;
+&lt;!&ndash;            /*display: flex;*/&ndash;&gt;
+&lt;!&ndash;            /*justify-content: center;*/&ndash;&gt;
+&lt;!&ndash;            /*align-items: center;*/&ndash;&gt;
+&lt;!&ndash;            /*font-size: 16px;*/&ndash;&gt;
+&lt;!&ndash;            /*color: #03e9f4;*/&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        .loginBox {&ndash;&gt;
+&lt;!&ndash;            width: 400px;&ndash;&gt;
+&lt;!&ndash;            height: 364px;&ndash;&gt;
+&lt;!&ndash;            background-color: #0c1622;&ndash;&gt;
+&lt;!&ndash;            margin: 100px auto;&ndash;&gt;
+&lt;!&ndash;            border-radius: 10px;&ndash;&gt;
+&lt;!&ndash;            box-shadow: 0 15px 25px 0 rgba(0, 0, 0, .6);&ndash;&gt;
+&lt;!&ndash;            padding: 40px;&ndash;&gt;
+&lt;!&ndash;            box-sizing: border-box;&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        h2 {&ndash;&gt;
+&lt;!&ndash;            text-align: center;&ndash;&gt;
+&lt;!&ndash;            color: aliceblue;&ndash;&gt;
+&lt;!&ndash;            margin-bottom: 30px;&ndash;&gt;
+&lt;!&ndash;            font-family: 'Courier New', Courier, monospace;&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        .item {&ndash;&gt;
+&lt;!&ndash;            height: 45px;&ndash;&gt;
+&lt;!&ndash;            border-bottom: 1px solid #fff;&ndash;&gt;
+&lt;!&ndash;            margin-bottom: 40px;&ndash;&gt;
+&lt;!&ndash;            position: relative;&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        .item input {&ndash;&gt;
+&lt;!&ndash;            width: 100%;&ndash;&gt;
+&lt;!&ndash;            height: 100%;&ndash;&gt;
+&lt;!&ndash;            color: #fff;&ndash;&gt;
+&lt;!&ndash;            padding-top: 20px;&ndash;&gt;
+&lt;!&ndash;            box-sizing: border-box;&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        .item input:focus+label,&ndash;&gt;
+&lt;!&ndash;        .item input:valid+label {&ndash;&gt;
+&lt;!&ndash;            top: 0px;&ndash;&gt;
+&lt;!&ndash;            font-size: 2px;&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        .item label {&ndash;&gt;
+&lt;!&ndash;            position: absolute;&ndash;&gt;
+&lt;!&ndash;            left: 0;&ndash;&gt;
+&lt;!&ndash;            top: 12px;&ndash;&gt;
+&lt;!&ndash;            transition: all 0.5s linear;&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        .btn {&ndash;&gt;
+&lt;!&ndash;            padding: 10px 20px;&ndash;&gt;
+&lt;!&ndash;            margin-top: 30px;&ndash;&gt;
+&lt;!&ndash;            color: #03e9f4;&ndash;&gt;
+&lt;!&ndash;            position: relative;&ndash;&gt;
+&lt;!&ndash;            overflow: hidden;&ndash;&gt;
+&lt;!&ndash;            text-transform: uppercase;&ndash;&gt;
+&lt;!&ndash;            letter-spacing: 2px;&ndash;&gt;
+&lt;!&ndash;            left: 35%;&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        .btn:hover {&ndash;&gt;
+&lt;!&ndash;            border-radius: 5px;&ndash;&gt;
+&lt;!&ndash;            color: #fff;&ndash;&gt;
+&lt;!&ndash;            background: #03e9f4;&ndash;&gt;
+&lt;!&ndash;            box-shadow: 0 0 5px 0 #03e9f4,&ndash;&gt;
+&lt;!&ndash;            0 0 25px 0 #03e9f4,&ndash;&gt;
+&lt;!&ndash;            0 0 50px 0 #03e9f4,&ndash;&gt;
+&lt;!&ndash;            0 0 100px 0 #03e9f4;&ndash;&gt;
+&lt;!&ndash;            transition: all 1s linear;&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        .btn>span {&ndash;&gt;
+&lt;!&ndash;            position: absolute;&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        .btn>span:nth-child(1) {&ndash;&gt;
+&lt;!&ndash;            width: 100%;&ndash;&gt;
+&lt;!&ndash;            height: 2px;&ndash;&gt;
+&lt;!&ndash;            background: -webkit-linear-gradient(left, transparent, #03e9f4);&ndash;&gt;
+&lt;!&ndash;            left: -100%;&ndash;&gt;
+&lt;!&ndash;            top: 0px;&ndash;&gt;
+&lt;!&ndash;            animation: line1 1s linear infinite;&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        @keyframes line1 {&ndash;&gt;
+
+&lt;!&ndash;            50%,&ndash;&gt;
+&lt;!&ndash;            100% {&ndash;&gt;
+&lt;!&ndash;                left: 100%;&ndash;&gt;
+&lt;!&ndash;            }&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        .btn>span:nth-child(2) {&ndash;&gt;
+&lt;!&ndash;            width: 2px;&ndash;&gt;
+&lt;!&ndash;            height: 100%;&ndash;&gt;
+&lt;!&ndash;            background: -webkit-linear-gradient(top, transparent, #03e9f4);&ndash;&gt;
+&lt;!&ndash;            right: 0px;&ndash;&gt;
+&lt;!&ndash;            top: -100%;&ndash;&gt;
+&lt;!&ndash;            animation: line2 1s 0.25s linear infinite;&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        @keyframes line2 {&ndash;&gt;
+
+&lt;!&ndash;            50%,&ndash;&gt;
+&lt;!&ndash;            100% {&ndash;&gt;
+&lt;!&ndash;                top: 100%;&ndash;&gt;
+&lt;!&ndash;            }&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        .btn>span:nth-child(3) {&ndash;&gt;
+&lt;!&ndash;            width: 100%;&ndash;&gt;
+&lt;!&ndash;            height: 2px;&ndash;&gt;
+&lt;!&ndash;            background: -webkit-linear-gradient(left, #03e9f4, transparent);&ndash;&gt;
+&lt;!&ndash;            left: 100%;&ndash;&gt;
+&lt;!&ndash;            bottom: 0px;&ndash;&gt;
+&lt;!&ndash;            animation: line3 1s 0.75s linear infinite;&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        @keyframes line3 {&ndash;&gt;
+
+&lt;!&ndash;            50%,&ndash;&gt;
+&lt;!&ndash;            100% {&ndash;&gt;
+&lt;!&ndash;                left: -100%;&ndash;&gt;
+&lt;!&ndash;            }&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        .btn>span:nth-child(4) {&ndash;&gt;
+&lt;!&ndash;            width: 2px;&ndash;&gt;
+&lt;!&ndash;            height: 100%;&ndash;&gt;
+&lt;!&ndash;            background: -webkit-linear-gradient(top, transparent, #03e9f4);&ndash;&gt;
+&lt;!&ndash;            left: 0px;&ndash;&gt;
+&lt;!&ndash;            top: 100%;&ndash;&gt;
+&lt;!&ndash;            animation: line4 1s 1s linear infinite;&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+
+&lt;!&ndash;        @keyframes line4 {&ndash;&gt;
+
+&lt;!&ndash;            50%,&ndash;&gt;
+&lt;!&ndash;            100% {&ndash;&gt;
+&lt;!&ndash;                top: -100%;&ndash;&gt;
+&lt;!&ndash;            }&ndash;&gt;
+&lt;!&ndash;        }&ndash;&gt;
+&lt;!&ndash;    </style>&ndash;&gt;
+</head>
+<body>
+&lt;!&ndash;<div class="loginBox">&ndash;&gt;
+&lt;!&ndash;    <h2>Welcome to Legfree!</h2>&ndash;&gt;
+&lt;!&ndash;    <form action="">&ndash;&gt;
+&lt;!&ndash;        <div class="item">&ndash;&gt;
+&lt;!&ndash;            <input type="text" required>&ndash;&gt;
+&lt;!&ndash;            <label for="userName">userName</label>&ndash;&gt;
+&lt;!&ndash;        </div>&ndash;&gt;
+&lt;!&ndash;        <div class="item">&ndash;&gt;
+&lt;!&ndash;            <input type="password" required>&ndash;&gt;
+&lt;!&ndash;            <label for="password">password</label>&ndash;&gt;
+&lt;!&ndash;        </div>&ndash;&gt;
+
+
+
+    <div>
+        <input id="userName">
+    </div>
+    <div>
+        <input id="password" type="password">
+    </div>
+    <div>
+        <button onclick="getLogIn()">登录</button>
+    </div>
+
+</div>
+
+</body>
+<script type="text/javascript">
+    function getLogIn(){
+        //record the user information
+        var user_id = document.getElementById("userName").value;
+        var pwd = document.getElementById("password").value;
+        //use ajax to send data to back-end for checking the validation of user and get certain return from back-end
+        axios({
+            method:"POST",
+            url:"/doLogin",
+            data:{
+                userAccount:user_id,
+                password:pwd
+            }
+        }).then(
+            response=>{
+                console.log(response.data);
+                if (response.data.state==1){
+                    var login_sts = response.data.state;
+                    var type = response.data.data;
+                    // Jump to the different page according to the user's  login status and limits of authority
+                    if(login_sts == "1") {
+                        if (type == "3") {
+                            url1 = "/toManager/" + user_id+",no,no";
+                        } else if (type == "1") {
+                            url1 = "/toOperator/" + user_id;
+                        } else if (type == "5") {
+                             url1 = "/toConsumer/" + user_id;
+                        }
+                         window.location.href = url1;
+                    } else {
+                        // login denied
+                        $.messager.alert('Login','Username or password is wrong！','warning');
+
+                    }
+                    //document.getElementById("abc").innerText = response.data.state;
+                }
+            }
+        );
+    }
+</script>
+</html>
+-->

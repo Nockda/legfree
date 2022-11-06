@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Renting History Page</title>
+	<link rel="stylesheet" type="text/css" href="/js/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/js/themes/icon.css">
+	<!--
+        <link rel="stylesheet" type="text/css" href="../demo.css">
+    -->
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/js/axios.js"></script>
+
+
+</head>
+<body>
+	<h2>User's information!</h2>
+	<div style="margin:20px 0;"></div>
+	<table id = "dg" class="easyui-datagrid" title="The vehicle you rent" style="width:900px;height:250px"
+			data-options="rownumbers:true,singleSelect:true,url:url,method:'get',toolbar:toolbar">
+		<thead>
+			<tr>
+				<th data-options="field:'orderId',width:120">Renting No</th>
+				<th data-options="field:'userId',width:80">User Id</th>
+				<th data-options="field:'vehicleId',width:80">vehicle Id</th>
+				<th data-options="field:'time',width:80">Time</th>
+				<th data-options="field:'orderMoney',width:100">Fees</th>
+				<th data-options="field:'state',width:100">State</th>
+				<th data-options="field:'createTime',width:100">Create Time</th>
+				<th data-options="field:'fromLocation',width:100">Departure</th>
+				<th data-options="field:'toLocation',width:100">Destination</th>
+			</tr>
+		</thead>
+	</table>
+	<script type="text/javascript">
+		var user_id = "${userId}";
+		var url = "/getOrderInfoByUserName/" +user_id;
+		var toolbar = [{
+			text:'Pay',
+			iconCls:'icon-add',
+			handler:function(){
+				var row = $('#dg').datagrid('getSelected');
+				axios({
+					method:"POST",
+					url:"/payBill",
+					data:{
+						orderId:row.orderId,
+						userId:user_id,
+					}
+				}).then(
+						response=>{
+							console.log(response.data);
+							if (response.data.data == "success"){
+								$.messager.confirm('Pay', 'Thanks for using the vehicle!!', function(r) {
+									if (r) {
+										url = "/toRentingHis/";
+										window.location.href = url + user_id;
+									}
+								});
+							} else {
+								// login denied
+								$.messager.alert('Pay','Paying fail!','warning');
+							}
+						}
+				);
+			}
+		},{
+			text:'Report Faculty',
+			iconCls:'icon-tip',
+			handler:function(){
+				var row = $('#dg').datagrid('getSelected');
+				var vehicle = row.vehicleId;
+				user_id = user_id +","+ vehicle;
+				url = "/toReporting/";
+				window.location.href = url+user_id;
+			}
+		},'-',{
+			text:'Back',
+			iconCls:'icon-back',
+			handler:function() {
+				url = "/toConsumer/" + user_id;
+				window.location.href = url;
+			}
+		}];
+
+	</script>
+</body>
+</html>

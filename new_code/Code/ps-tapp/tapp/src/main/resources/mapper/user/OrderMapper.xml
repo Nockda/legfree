@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.glasgow.tapp.dao.OrderDao">
+    <select id="getOrderInfo" resultType="com.glasgow.tapp.pojo.Order">
+        select * from order_info
+    </select>
+
+    <select id="getOrderInfoByUserId" resultType="com.glasgow.tapp.pojo.Order">
+        select * from order_info
+        where user_id = #{userId}
+    </select>
+
+
+<!--    <update id="setVehicleStateById">-->
+<!--        update order-->
+<!--        set vehicle_state = 1-->
+<!--        where vehicle_id = #{id}-->
+<!--    </update>-->
+
+
+
+
+    <insert id="insertOrderInfo">
+        insert into order_info(
+            order_id,
+            user_id,
+            vehicle_id,
+            time,
+            order_money,
+            state,
+            create_time)
+        values (#{orderId},#{userId},#{vehicleId},#{time},#{orderMoney},#{state},#{createTime})
+    </insert>
+
+    <update id="updateOrderStateByOrderId">
+        update order_info
+        set state = 1
+        where order_id = #{orderId}
+    </update>
+
+    <select id="getOrderInfoByOrderId" resultType="com.glasgow.tapp.pojo.Order">
+        select * from order_info
+        where order_id = #{orderId}
+    </select>
+
+
+    <select id="getAllOrderInfo" resultType="com.glasgow.tapp.pojo.Order">
+        select order_id,user_id,vehicle_id,time,order_money,date_format(create_time,'%Y-%m-%d %H:%i:%s')as create_time,from_location,to_location ,state from order_info
+    </select>
+
+    <select id="getAllOrderInfoByDate" resultType="com.glasgow.tapp.pojo.Order">
+        select order_id,user_id,vehicle_id,time,order_money,date_format(create_time,'%Y-%m-%d %H:%i:%s')as create_time,from_location,to_location ,state from order_info
+        where create_time >= #{date1} and  #{date2} >= create_time
+    </select>
+
+    <insert id="insertErrorInfo" parameterType="com.glasgow.tapp.pojo.ErrorInfo" >
+        insert into error_info
+            (error_id,vehicle_id,user_id,message)
+        values
+            (date_format(NOW(),'%Y%m%d%H%i%s'),#{vehicleId},#{userId},#{message})
+    </insert>
+
+    <update id="updateVehicleInfoSts" parameterType="com.glasgow.tapp.pojo.Vehicle" >
+        update vehicle_info
+        set vehicle_state = #{message}
+        where vehicle_id = #{vehicleId}
+    </update>
+    <update id="chargeVehicle" parameterType="com.glasgow.tapp.pojo.Vehicle" >
+        update vehicle_info
+        set vehicle_state = 'Normal', vehicle_battery ='100'
+        where vehicle_id = #{vehicleId}
+    </update>
+    <update id="repairVehicle" parameterType="com.glasgow.tapp.pojo.Vehicle" >
+        update vehicle_info
+        set vehicle_state = 'Normal', vehicle_durable ='100'
+        where vehicle_id = #{vehicleId}
+    </update>
+
+    <update id="moveVehicle" parameterType="com.glasgow.tapp.pojo.Vehicle" >
+        update vehicle_info
+        set vehicle_location = #{location}
+        where vehicle_id = #{vehicleId}
+    </update>
+
+    <insert id="insertOriginOrderInfo" parameterType="com.glasgow.tapp.pojo.Order" >
+        insert into order_info
+            (order_id,user_id,vehicle_id,create_time,state,from_location,fee)
+        values
+         (#{order_id},#{user_id},#{vehicle_id},date_format(NOW(),'%Y-%m-%d %H:%i:%s'),'Not Paid',#{vehicle_location},#{fee})
+    </insert>
+
+    <update id="updateVehicleInfoStsToInUse" parameterType="com.glasgow.tapp.pojo.Vehicle" >
+        update vehicle_info
+        set vehicle_state = 'In Use'
+        where vehicle_id = #{vehicle_id}
+    </update>
+
+    <update id="updateOrderInfoForReturn" parameterType="com.glasgow.tapp.pojo.Order" >
+        update order_info
+        set time = #{time},
+            order_money = (select vehicle_free from vehicle_info where vehicle_id = #{vehicle_id}) * #{time},
+            to_location = #{to_location}
+        where order_id = #{order_id}
+    </update>
+
+    <update id="updateVehicleAfterReturn" parameterType="com.glasgow.tapp.pojo.Vehicle" >
+        update vehicle_info
+        set vehicle_state = 'Normal',
+            vehicle_battery = vehicle_battery - #{battery},
+            vehicle_durable = vehicle_durable - #{broken},
+            vehicle_location = #{to_location}
+        where vehicle_id = #{vehicle_id}
+    </update>
+
+    <update id="updateOrderInfoPaid" parameterType="com.glasgow.tapp.pojo.Order" >
+        update order_info
+        set state= 'Paid'
+        where order_id = #{order_id}
+    </update>
+
+    <update id="updateUserAccount" parameterType="com.glasgow.tapp.pojo.User" >
+        update user
+        set money = money- (select order_money from order_info where order_id = #{order_id})
+        where user_name = #{user_id}
+    </update>
+
+    <select id="getOrderInfoByUserName" resultType="com.glasgow.tapp.pojo.Order">
+        select * from order_info
+        where user_id = #{user_id}
+    </select>
+
+    <select id="getNormalVec" resultType="java.lang.Integer">
+        select count(*) from vehicle_info where vehicle_state = 'Normal'
+    </select>
+
+    <select id="getBrokenVec" resultType="java.lang.Integer">
+        select count(*) from vehicle_info where vehicle_state = 'Broken'
+    </select>
+
+    <select id="getLowBatteryVec" resultType="java.lang.Integer">
+        select count(*) from vehicle_info where vehicle_state = 'Low Battery'
+    </select>
+
+    <select id="getInUseVec" resultType="java.lang.Integer">
+        select count(*) from vehicle_info where vehicle_state = 'In Use'
+    </select>
+
+    <select id="getBrokenReport" resultType="java.lang.Integer">
+        select count(*) from error_info where message = 'Broken'
+    </select>
+
+    <select id="getLowBatteryReport" resultType="java.lang.Integer">
+        select count(*) from error_info where message = 'Low Battery'
+    </select>
+
+
+</mapper>
