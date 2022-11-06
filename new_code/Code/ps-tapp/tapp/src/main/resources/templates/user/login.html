@@ -1,90 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html>-->
-<!--<head>-->
-
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Login Page</title>-->
-<!--    <link rel="stylesheet" type="text/css" href="/js/themes/default/easyui.css">-->
-<!--    <link rel="stylesheet" type="text/css" href="/js/themes/icon.css">-->
-<!--    <script type="text/javascript" src="/js/jquery.min.js"></script>-->
-<!--    <script type="text/javascript" src="/js/jquery.easyui.min.js"></script>-->
-<!--    <script type="text/javascript" src="/js/axios.js"></script>-->
-<!--</head>-->
-<!--<body>-->
-<!--<h2>Welcome to LEGFREE!</h2>-->
-<!--<div style="margin:20px 0;"></div>-->
-<!--<div class="easyui-panel" style="width:400px;padding:50px 60px">-->
-<!--    <div style="margin-bottom:20px">-->
-<!--        <input class="easyui-textbox" id="username"  iconWidth="28" style="width:100%;height:34px;padding:10px;">-->
-<!--    </div>-->
-<!--    <div style="margin-bottom:20px">-->
-<!--        <input class="easyui-passwordbox" id="password"  iconWidth="28" style="width:100%;height:34px;padding:10px">-->
-<!--    </div>-->
-<!--    <div style="margin-bottom:20px">-->
-<!--        <a href="#" class="easyui-linkbutton" onclick="getLogIn()">log in</a>-->
-<!--    </div>-->
-<!--</div>-->
-<!--<div id="viewer"></div>-->
-
-<!--<script type="text/javascript">-->
-<!--    function getLogIn(){-->
-<!--        //record the user information-->
-<!--        var user_id = $("#username").val();-->
-<!--        var pwd = $("#password").val();-->
-<!--//        alert(user_id);-->
-<!--        //use ajax to send data to back-end for checking the validation of user and get certain return from back-end-->
-<!--        axios({-->
-<!--            method:"POST",-->
-<!--            url:"/doLogin",-->
-<!--            data:{-->
-<!--                userAccount:user_id,-->
-<!--                password:pwd-->
-<!--            }-->
-<!--        }).then(-->
-<!--            response=>{-->
-<!--                console.log(response.data);-->
-<!--                if (response.data.state==1){-->
-<!--                    var login_sts = response.data.state;-->
-<!--                    var type = response.data.data;-->
-<!--                    // Jump to the different page according to the user's  login status and limits of authority-->
-<!--                    if(login_sts == "1") {-->
-<!--                        if (type == "3") {-->
-<!--                            url1 = "/toManager/" + user_id+",no,no";-->
-<!--                        } else if (type == "1") {-->
-<!--                            url1 = "/toOperator/" + user_id;-->
-<!--                        } else if (type == "5") {-->
-<!--                            url1 = "/toConsumer/" + user_id;-->
-<!--                        }-->
-<!--                        window.location.href = url1;-->
-<!--                    } else {-->
-<!--                        // login denied-->
-<!--                        $.messager.alert('Login','Username or password is wrong！','warning');-->
-
-<!--                    }-->
-<!--                    //document.getElementById("abc").innerText = response.data.state;-->
-<!--                }-->
-<!--            }-->
-<!--        );-->
-<!--    }-->
-<!--</script>-->
-<!--<style>-->
-<!--    #viewer{-->
-<!--        position: relative;-->
-<!--        padding: 0 60px;-->
-<!--        top: -70px;-->
-<!--        font-size: 54px;-->
-<!--        line-height: 60px;-->
-<!--    }-->
-
-
-
-
-<!--</style>-->
-<!--</body>-->
-<!--</html>-->
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -101,17 +14,7 @@
 <div class="loginBox">
     <h2>Welcome to LEGFREE!</h2>
     <div style="margin:20px 0;"></div>
-    <!--<div class="easyui-panel" style="width:400px;padding:50px 60px">-->
-    <!--    <div style="margin-bottom:20px">-->
-    <!--        <input class="easyui-textbox" id="username"  iconWidth="28" style="width:100%;height:34px;padding:10px;">-->
-    <!--    </div>-->
-    <!--    <div style="margin-bottom:20px">-->
-    <!--        <input class="easyui-passwordbox" id="password"  iconWidth="28" style="width:100%;height:34px;padding:10px">-->
-    <!--    </div>-->
-    <!--    <div style="margin-bottom:20px">-->
-    <!--        <a href="#" class="easyui-linkbutton" onclick="getLogIn()">log in</a>-->
-    <!--    </div>-->
-    <!--</div>-->
+
 
     <div class="item">
         <input id="username">
