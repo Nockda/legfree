@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
 	<meta charset="UTF-8">
 	<title>Renting History Page</title>
@@ -85,5 +85,52 @@
 		}];
 
 	</script>
+
+
+	<div id="money">
+		<table>
+			<tr>
+				<td>money</td>
+
+			</tr>
+			<tr >
+				<td>{{bikeData.money}}</td>
+
+			</tr>
+		</table>
+
+
+	</div>
+
+
 </body>
+
+
+
+
+<script>
+	var money=new Vue({
+		el:"#money",
+		data:{
+			bikeData:[]
+		},
+		mounted(){
+
+			axios({
+				method:"get",
+				url:"user/getUserMoneyByUserName",
+
+			}).then(response=>{
+				this.bikeData=response.data;
+			});
+		},
+		methods:{
+
+		}
+	});
+
+
+</script>
+
+
 </html>
