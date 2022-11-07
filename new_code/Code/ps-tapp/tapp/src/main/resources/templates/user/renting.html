@@ -28,9 +28,9 @@
 			<div style="margin-bottom:20px">
 				<input class="easyui-textbox" id="destination" name="Destination" style="width:100%" data-options="label:'Destination:', required:true">
 			</div>
-			<div style="margin-bottom:20px">
-				<input class="easyui-textbox" id="time" name="Time" style="width:100%" data-options="label:'Time:', required:true">
-			</div>
+<!--			<div style="margin-bottom:20px">-->
+<!--				<input class="easyui-textbox" id="time" name="Time" style="width:100%" data-options="label:'Time:', required:true">-->
+<!--			</div>-->
 
 		</form>
 
@@ -52,7 +52,7 @@
 
 		function returnVehicle(){
 			var destination=document.getElementById("destination").value;
-			var time=document.getElementById("time").value;
+			var time=20;
 			axios({
 				method:"POST",
 				url:"/updateOrderInfoAgain",

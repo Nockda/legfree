@@ -4,6 +4,7 @@ import com.glasgow.tapp.common.utils.ResponseModel;
 import com.glasgow.tapp.pojo.Order;
 import com.glasgow.tapp.pojo.User;
 import com.glasgow.tapp.pojo.Vehicle;
+import com.glasgow.tapp.service.OrderService;
 import com.glasgow.tapp.service.UserService;
 import com.glasgow.tapp.service.VehicleService;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +43,8 @@ public class VehicleController {
 
     @Autowired
     private VehicleService vehicleService;
+    @Autowired
+    private OrderService orderService;
 
 
     /**
@@ -177,7 +180,22 @@ public class VehicleController {
 
         return new ResponseModel(sts);
     }
+    public static long getTimeMilliseconds(Date date1, Date date2) {
+        long rtnLong = 0;
+        //判断两个参数是否为空，为空直接返回
+        if (date1 == null || date1 == null) {
+            return rtnLong;
+        }
+        //使用第一个参数减去第二个参数
+        rtnLong = date1.getTime() - date2.getTime();
+        //如果结果小于0
+        if (rtnLong < 0) {
+            //再使用第二个参数减去第一个参数
+            rtnLong = date2.getTime() - date1.getTime();
+        }
+        return rtnLong;
 
+    }
     @PostMapping("/updateOrderInfoAgain")
     public ResponseModel updateOrderInfoAgain(@RequestBody Map<String, Object> param, HttpServletRequest request) {
 
@@ -187,7 +205,15 @@ public class VehicleController {
         Random random = new Random();
         //int time = random.nextInt(10);
 
-        int time =parseInt(param.get("time").toString());
+        //int time =parseInt(param.get("time").toString());
+        Order order =  orderService.getOrderInfoByOrderId(order_id);
+        Date date  = new Date();
+        Date date2 = order.getCreateTime();
+
+        int time = (int) getTimeMilliseconds(date,date2)/10000;
+        System.out.println("---------------------");
+        System.out.println(time);
+        System.out.println("----------------------");
         int battery = random.nextInt(15)%5+5;
         int broken = random.nextInt(8);
 //        int battery = time;

@@ -68,4 +68,10 @@ public class OrderService {
         return orderInfo;
 
     }
+
+    public Order getOrderInfoByOrderId(String order_id) {
+       Order order =  orderDao.getOrderInfoByOrderId(order_id);
+
+       return order;
+    }
 }
