@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-for="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="application/javascript" src="/js/axios.js"></script>
+    <script type="application/javascript" src="/js/vue.js"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+        body {
+            margin: 0;
+            background: -webkit-linear-gradient(45deg, #f6f5f5, #f7c2c2);
+            background: linear-gradient(45deg, #ffffff, #f7c2c2);
+            font-family: sans-serif;
+            font-weight: 100;
+        }
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+        translate(-50%, -50%);
+            transform:
+                    translate(-50%, -50%);
+        }
+        table {
+            width: 800px;
+            border-collapse: collapse;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        th,
+        td {
+            padding: 15px;
+            background-color: rgba(194, 116, 116, 0.2);
+            color: #440e0e;
+        }
+        th {
+            text-align: left;
+        }
+        thead th {
+            background-color: #55608f;
+        }
+        tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        tbody td {
+            position: relative;
+        }
+        tbody td:hover:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -9999px;
+            bottom: -9999px;
+            background-color: rgba(255, 255, 255, 0.2);
+            z-index: -1;
+        }
+
+        .btn {
+            background: #eb94d0;
+            /* 创建渐变 */
+            background-image: -webkit-linear-gradient(top, #eb94d0, #dfe3e5);
+            background-image: -moz-linear-gradient(top, #eb94d0, #ffffff);
+            background-image: -ms-linear-gradient(top, #eb94d0, #ffffff);
+            background-image: -o-linear-gradient(top, #eb94d0, #ffffff);
+            background-image: linear-gradient(to bottom, #eb94d0, #ffffff);
+            /* 给按钮添加圆角 */
+            -webkit-border-radius: 28;
+            -moz-border-radius: 28;
+            border-radius: 28px;
+            text-shadow: 3px 2px 1px #ffffff;
+            -webkit-box-shadow: 6px 5px 24px #666666;
+            -moz-box-shadow: 6px 5px 24px #666666;
+            box-shadow: 6px 5px 24px #666666;
+            font-family: Arial;
+            color: #440d0d;
+            font-size: 10px;
+            padding: 5px;
+            text-decoration: none;
+        }
+        /* 悬停样式 */
+        .btn:hover {
+            background: #d78ed7;
+            background-image: -webkit-linear-gradient(top, #dfe3e5, #eb94d0);
+            background-image: -moz-linear-gradient(top, #dfe3e5, #eb94d0);
+            background-image: -ms-linear-gradient(top, #dfe3e5, #eb94d0);
+            background-image: -o-linear-gradient(top, #dfe3e5, #eb94d0);
+            background-image: linear-gradient(to bottom, #dfe3e5, #eb94d0);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+
+<div id="money">
+    <table>
+        <tr>
+            <td>money</td>
+
+        </tr>
+        <tr >
+            <td>{{bikeData.money}}</td>
+
+        </tr>
+    </table>
+
+
+</div>
+<input id="moneyId" placeholder="money you want to recharge">
+<button class="btn" id="charge" onclick="charge()">charge</button>
+
+</body>
+
+
+
+
+
+
+<script>
+    var money=new Vue({
+        el:"#money",
+        data:{
+            bikeData:[]
+        },
+        mounted(){
+
+            axios({
+                method:"get",
+                url:"user/getUserMoneyByUserName",
+
+            }).then(response=>{
+                this.bikeData=response.data;
+            });
+        },
+        methods:{
+
+        }
+    });
+
+
+</script>
+
+
+
+<script type="text/javascript">
+
+    function charge(){
+        var moneyId = document.getElementById("moneyId").value;
+
+        //参数
+        axios({
+            method: "POST",
+            url: "/user/updateMoneyByUserName",
+            data: {
+                moneyId: moneyId,
+
+            }
+        }).then(
+            response=>{
+                window.location.href="/moneyInfo";
+
+            }
+        );
+    }
+</script>
+</html>

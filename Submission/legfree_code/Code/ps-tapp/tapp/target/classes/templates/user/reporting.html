@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Reporting Page</title>
+	<link rel="stylesheet" type="text/css" href="/js/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/js/themes/icon.css">
+<!--
+	<link rel="stylesheet" type="text/css" href="../demo.css">
+-->
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/js/axios.js"></script>
+
+</head>
+<body>
+<h2>Reporting</h2>
+<div style="margin:20px 0;"></div>
+<div class="easyui-panel" title="New Topic" style="width:100%;max-width:400px;padding:30px 60px;">
+	<form id="ff" class="easyui-form" method="post" data-options="novalidate:true">
+
+		<div style="margin-bottom:20px">
+			<input class="easyui-textbox" id="user_id" name ="user_id" value="${userId}" style="width:100%" data-options="label:'User:',readonly:true">
+		</div>
+		<div style="margin-bottom:20px">
+			<input class="easyui-textbox" id="vehicle_id" name="vehicle_id" value="${vehicleNo}" style="width:100%" data-options="label:'Vehicle No:',readonly:true">
+		</div>
+		<div style="margin-bottom:20px">
+			<select class="easyui-combobox" id="problem"  label="problem" style="width:100%"><option value="Broken">Broken</option><option value="Low Battery">Low Battery</option></select>
+		</div>
+	</form>
+	<div style="text-align:center;padding:10px 0">
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="doSubmit()" style="width:80px">Submit</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="doQuit()" style="width:80px">Return</a>
+	</div>
+</div>
+<script>
+	var user_id = '${userId}';
+	var vehicle_id= '${vehicleNo}';
+
+		function doSubmit(){
+			var problem = $("#problem").val();
+			axios({
+				method: "POST",
+				url: "/errorInfo/getErrorInfo",
+				data: {
+					userId: user_id,
+					vehicleId: vehicle_id,
+					message: problem,
+				}
+			}).then(
+					response => {
+						console.log(response.data);
+						if (response.data.data == "success") {
+							$.messager.confirm('Report', 'Thanks for reporting faculty!!', function(r){
+								if (r){
+									url1 = "/toConsumer/" + user_id;
+									window.location.href = url1;
+								}
+							});
+							} else {
+								// login denied
+							$.messager.alert('Report','Sorry,the network seems to be broken down！','warning');
+							}
+
+					}
+			);
+
+	}
+	function doQuit(){
+		url1 = "/toConsumer/" + user_id;
+		window.location.href = url1;
+	}
+</script>
+</body>
+</html>
+
+
+
+

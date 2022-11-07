@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="/js/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/js/themes/icon.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/js/axios.js"></script>
+</head>
+<body>
+<div class="loginBox">
+    <h2>Welcome to LEGFREE!</h2>
+    <div style="margin:20px 0;"></div>
+
+
+    <div class="item">
+        <input id="username">
+    </div>
+    <div class="item">
+        <input id="password" type="password">
+    </div>
+    <div>
+        <button class="btn" onclick="getLogIn()">Login
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+
+</div>
+<div id="viewer"></div>
+
+<script type="text/javascript">
+    function getLogIn(){
+        //record the user information
+        var user_id = $("#username").val();
+        var pwd = $("#password").val();
+//        alert(user_id);
+        //use ajax to send data to back-end for checking the validation of user and get certain return from back-end
+        axios({
+            method:"POST",
+            url:"/doLogin",
+            data:{
+                userAccount:user_id,
+                password:pwd
+            }
+        }).then(
+            response=>{
+                console.log(response.data);
+                if (response.data.state==1){
+                    var login_sts = response.data.state;
+                    var type = response.data.data;
+                    // Jump to the different page according to the user's  login status and limits of authority
+                    if(login_sts == "1") {
+                        if (type == "3") {
+                            url1 = "/toManager/" + user_id+",no,no";
+                        } else if (type == "1") {
+                            url1 = "/toOperator/" + user_id;
+                        } else if (type == "5") {
+                            url1 = "/toConsumer/" + user_id;
+                        }
+                        window.location.href = url1;
+                    } else {
+                        // login denied
+                        $.messager.alert('Login','Username or password is wrong！','warning');
+
+                    }
+                    //document.getElementById("abc").innerText = response.data.state;
+                }
+            }
+        );
+    }
+</script>
+<style>
+    #viewer{
+        position: relative;
+        padding: 0 60px;
+        top: -70px;
+        font-size: 54px;
+        line-height: 60px;
+    }
+
+
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    input,
+    button {
+        background: transparent;
+        border: 0;
+        outline: none;
+    }
+
+    body {
+
+        height: 100vh;
+        background: linear-gradient(#fce5e5, #f7c2c2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        color: rgb(255, 116, 116);
+    }
+
+    .loginBox {
+        width: 400px;
+        height: 364px;
+        background-color: #f7c2c2;
+        margin: 100px auto;
+        border-radius: 10px;
+        box-shadow: 0 15px 25px 0 rgba(47, 41, 41, 0.6);
+        padding: 40px;
+        box-sizing: border-box;
+    }
+
+    h2 {
+        text-align: center;
+        color: #541616;
+        margin-bottom: 30px;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .item {
+        height: 45px;
+        border-bottom: 1px solid #541616;
+        margin-bottom: 40px;
+        position: relative;
+    }
+
+    .item input {
+        width: 100%;
+        height: 100%;
+        color: #541616;
+        padding-top: 20px;
+        box-sizing: border-box;
+    }
+
+    .item input:focus+label,
+    .item input:valid+label {
+        top: 0px;
+        font-size: 2px;
+    }
+
+    .item label {
+        position: absolute;
+        left: 0;
+        top: 12px;
+        transition: all 0.5s linear;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        margin-top: 30px;
+        color: #541616;
+        position: relative;
+        overflow: hidden;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        left: 35%;
+    }
+
+    .btn:hover {
+        border-radius: 5px;
+        color: #930f0f;
+        background: #541616;
+        box-shadow: 0 0 5px 0 #000000,
+        0 0 25px 0 #541616,
+        0 0 50px 0 #541616,
+        0 0 100px 0 #541616;
+        transition: all 1s linear;
+    }
+
+    .btn>span {
+        position: absolute;
+    }
+
+    .btn>span:nth-child(1) {
+        width: 100%;
+        height: 2px;
+        background: -webkit-linear-gradient(left, transparent, #441010);
+        left: -100%;
+        top: 0px;
+        animation: line1 1s linear infinite;
+    }
+
+    @keyframes line1 {
+
+        50%,
+        100% {
+            left: 100%;
+        }
+    }
+
+    .btn>span:nth-child(2) {
+        width: 2px;
+        height: 100%;
+        background: -webkit-linear-gradient(top, transparent, #541616);
+        right: 0px;
+        top: -100%;
+        animation: line2 1s 0.25s linear infinite;
+    }
+
+    @keyframes line2 {
+
+        50%,
+        100% {
+            top: 100%;
+        }
+    }
+
+    .btn>span:nth-child(3) {
+        width: 100%;
+        height: 2px;
+        background: -webkit-linear-gradient(left, #541616, transparent);
+        left: 100%;
+        bottom: 0px;
+        animation: line3 1s 0.75s linear infinite;
+    }
+
+    @keyframes line3 {
+
+        50%,
+        100% {
+            left: -100%;
+        }
+    }
+
+    .btn>span:nth-child(4) {
+        width: 2px;
+        height: 100%;
+        background: -webkit-linear-gradient(top, transparent, #541616);
+        left: 0px;
+        top: 100%;
+        animation: line4 1s 1s linear infinite;
+    }
+
+    @keyframes line4 {
+
+        50%,
+        100% {
+            top: -100%;
+        }
+    }
+
+
+</style>
+</body>
+</html>
