@@ -1,2 +1,3 @@
 # legfree
-LegFree for UofG project
+LegFree - UofG project
+Programming and System Development
